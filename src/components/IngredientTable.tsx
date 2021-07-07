@@ -10,6 +10,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { Drink } from "../interfaces";
 import { ingredientsFromDrink, measuresFromDrink } from "../util";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {},
@@ -17,6 +18,11 @@ const useStyles = makeStyles({
 
 const IngredientTable = ({ drink }: { drink: Drink }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const redirectTo = (url: string): void => {
+    history.push(url);
+  };
 
   const ingredients = ingredientsFromDrink(drink);
   const measures = measuresFromDrink(drink);
@@ -41,7 +47,10 @@ const IngredientTable = ({ drink }: { drink: Drink }) => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.ingredient}>
+            <TableRow
+              onClick={() => redirectTo(`/ingredient/${row.ingredient}/`)}
+              key={row.ingredient}
+            >
               <TableCell>{row.ingredient}</TableCell>
               <TableCell>{row.measure}</TableCell>
             </TableRow>

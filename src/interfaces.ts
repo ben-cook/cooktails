@@ -50,3 +50,12 @@ export interface Drink {
   strCreativeCommonsConfirmed?: string;
   dateModified?: string;
 }
+
+export interface Ingredient {
+  idIngredient?: string;
+  strIngredient?: string;
+  strDescription?: string;
+  strType?: string;
+  strAlcohol?: any;
+  strABV?: any;
+}
