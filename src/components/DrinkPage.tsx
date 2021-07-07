@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Drink } from "../interfaces";
 import ReactPlayer from "react-player/youtube";
 import IngredientTable from "./IngredientTable";
+import Loading from "./Loading";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
@@ -21,7 +22,7 @@ const DrinkPage = ({ id }: { id: string }) => {
   const { data, error, isLoading } = useGetDrinkByIDQuery(id);
 
   if (isLoading) {
-    return <p>loading</p>;
+    return <Loading />;
   }
 
   if (error) {

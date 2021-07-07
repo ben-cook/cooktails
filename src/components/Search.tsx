@@ -6,6 +6,7 @@ import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const useStyles = makeStyles({
   gridContainer: { flexGrow: 1 },
@@ -64,7 +65,7 @@ const Search = () => {
         variant="outlined"
         onChange={onChangeHandler}
       />
-      {!drinks && <p>loading</p>}
+      {!drinks && <Loading />}
       {drinks && (
         <Grid
           container
