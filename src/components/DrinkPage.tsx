@@ -12,7 +12,11 @@ const useStyles = makeStyles({
     height: "75vh",
   },
   ingredients: {
-    marginTop: "1vh",
+    marginTop: "2em",
+  },
+  video: {
+    margin: "auto",
+    marginTop: "2em",
   },
 });
 
@@ -46,9 +50,13 @@ const DrinkPage = ({ id }: { id: string }) => {
         <Typography variant="h4">Recipe</Typography>
         <Typography variant="h6">{drinkInfo.strInstructions}</Typography>
 
-        <IngredientTable drink={drinkInfo} />
+        <div className={classes.ingredients}>
+          <IngredientTable drink={drinkInfo} />
+        </div>
 
-        {drinkInfo.strVideo && <ReactPlayer url={drinkInfo.strVideo} />}
+        {drinkInfo.strVideo && (
+          <ReactPlayer url={drinkInfo.strVideo} className={classes.video} />
+        )}
       </CardContent>
     </Card>
   );
