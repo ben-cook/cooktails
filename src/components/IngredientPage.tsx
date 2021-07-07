@@ -43,7 +43,7 @@ const IngredientPage = ({ name }: { name: string }) => {
       <CardContent>
         <Typography variant="h2">
           {ingredient.strIngredient}
-          <Typography variant="body1">{ingredient.idIngredient}</Typography>
+          {/* <Typography variant="body1">{ingredient.idIngredient}</Typography> */}
         </Typography>
         <Typography variant="h4">About</Typography>
         <Typography variant="h6">{ingredient.strDescription}</Typography>

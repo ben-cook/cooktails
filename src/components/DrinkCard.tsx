@@ -30,7 +30,7 @@ const DrinkCard = ({ drink }: { drink: Drink }): ReactElement => {
           </Typography>
         ))}
 
-        <Typography variant="body1">{drink.idDrink}</Typography>
+        {/* <Typography variant="body1">{drink.idDrink}</Typography> */}
       </CardContent>
     </Card>
   );

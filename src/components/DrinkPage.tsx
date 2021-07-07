@@ -45,7 +45,7 @@ const DrinkPage = ({ id }: { id: string }) => {
       <CardContent>
         <Typography variant="h2">
           {drinkInfo.strDrink}
-          <Typography variant="body1">{drinkInfo.idDrink}</Typography>
+          {/* <Typography variant="body1">{drinkInfo.idDrink}</Typography> */}
         </Typography>
         <Typography variant="h4">Recipe</Typography>
         <Typography variant="h6">{drinkInfo.strInstructions}</Typography>
