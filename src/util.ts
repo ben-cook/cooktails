@@ -24,3 +24,15 @@ export const ingredientsFromDrink = (drink: Drink): string[] => {
 
   return ingredients;
 };
+
+export const measuresFromDrink = (drink: Drink): string[] => {
+  let measures: string[] = [];
+  for (let i = 1; i < 16; i++) {
+    let measure = drink[`strMeasure${i}` as keyof Drink];
+    if (measure) {
+      measures.push(measure);
+    }
+  }
+
+  return measures;
+};

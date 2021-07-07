@@ -5,6 +5,7 @@ import { getPopularDrinks, searchDrinkByName } from "../api";
 import { Grid, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   gridContainer: { flexGrow: 1 },
@@ -84,7 +85,12 @@ const Search = () => {
               className={classes.gridItem}
               style={{ height: largerThan600 ? "60vh" : "" }}
             >
-              <DrinkCard drink={drink} />
+              <Link
+                to={`/drink/${drink.idDrink}`}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <DrinkCard drink={drink} />
+              </Link>
             </Grid>
           ))}
         </Grid>
