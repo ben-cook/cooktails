@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const REACT_APP_API_KEY = 9973533;
-const REACT_APP_CORS_PROXY_URL = "https://fierce-mountain-04762.herokuapp.com/";
+import { REACT_APP_API_KEY, REACT_APP_CORS_PROXY_URL } from "./util";
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
