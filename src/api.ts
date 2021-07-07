@@ -1,13 +1,16 @@
 import axios from "axios";
 
+const REACT_APP_API_KEY = 9973533;
+const REACT_APP_CORS_PROXY_URL = "https://thingproxy.freeboard.io/fetch/";
+
 const headers = {
   "Access-Control-Allow-Origin": "*",
 };
 
-const baseURL = `www.thecocktaildb.com/api/json/v2/${process.env.REACT_APP_API_KEY}`;
+const baseURL = `www.thecocktaildb.com/api/json/v2/${REACT_APP_API_KEY}`;
 
 export const withCors = (url: string): string => {
-  return process.env.REACT_APP_CORS_PROXY_URL + url;
+  return REACT_APP_CORS_PROXY_URL + url;
 };
 
 export const searchDrinkByName = (name: string) => {
