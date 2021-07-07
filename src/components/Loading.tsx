@@ -2,7 +2,7 @@ import ReactLoading from "react-loading";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-  root: { paddingTop: "15vh", margin: "auto" },
+  root: { paddingTop: "15vh", margin: "auto", maxHeight: 100, maxWidth: 100 },
 });
 
 const Loading = () => {
