@@ -55,7 +55,11 @@ const DrinkPage = ({ id }: { id: string }) => {
         </div>
 
         {drinkInfo.strVideo && (
-          <ReactPlayer url={drinkInfo.strVideo} className={classes.video} />
+          <ReactPlayer
+            url={drinkInfo.strVideo}
+            className={classes.video}
+            width="80%"
+          />
         )}
       </CardContent>
     </Card>

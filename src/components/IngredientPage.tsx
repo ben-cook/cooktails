@@ -45,8 +45,7 @@ const IngredientPage = ({ name }: { name: string }) => {
           {ingredient.strIngredient}
           {/* <Typography variant="body1">{ingredient.idIngredient}</Typography> */}
         </Typography>
-        <Typography variant="h4">About</Typography>
-        <Typography variant="h6">{ingredient.strDescription}</Typography>
+        <Typography variant="body1">{ingredient.strDescription}</Typography>
 
         {ingredient.strABV && (
           <Typography variant="h6">{ingredient.strABV}% ABV</Typography>
