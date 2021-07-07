@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {},
+  row: { "&:hover": { cursor: "pointer" } },
 });
 
 const IngredientTable = ({ drink }: { drink: Drink }) => {
@@ -50,6 +51,7 @@ const IngredientTable = ({ drink }: { drink: Drink }) => {
             <TableRow
               onClick={() => redirectTo(`/ingredient/${row.ingredient}/`)}
               key={row.ingredient}
+              className={classes.row}
             >
               <TableCell>{row.ingredient}</TableCell>
               <TableCell>{row.measure}</TableCell>
