@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { Drink } from "../../interfaces";
 import DrinkCard from "./DrinkCard";
 import {
@@ -12,20 +12,47 @@ import {
 } from "../../api";
 import Loading from "../Loading";
 import SearchBar from "./SearchBar";
+import { replaceSpaceWithUnderscore } from "../../util";
 
 const useStyles = makeStyles({
   resultsGridContainer: { flexGrow: 1 },
   resultsGridItem: {},
 });
 
+const formatErrorMessage = (ingredients: string[]): string => {
+  // const recursiveFormat = (ingredients: string[]): string => {
+  //   let string;
+  //   if (ingredients.length === 2) {
+  //     string = `${ingredients[0]} and ${ingredients[1]}`;
+  //   } else {
+  //     string = `${ingredients[0]}, ${recursiveFormat(ingredients.slice(1))}`;
+  //   }
+
+  //   return string;
+  // };
+
+  // let ingredientString;
+
+  // if (ingredients.length === 1) {
+  //   ingredientString = ingredients[0];
+  // } else {
+  //   ingredientString = recursiveFormat(ingredients);
+  // }
+
+  // return `Can't find any drinks with ${ingredientString}.`;
+  return "can't find those drinks";
+};
+
 const SearchPage = () => {
   const classes = useStyles();
   const largerThan600 = useMediaQuery("(min-width:600px)");
 
-  const queryRef = useRef("");
+  const queryRef = useRef<string>("");
   const [drinks, setDrinks] = useState<Drink[] | null>(null);
 
-  // const ingredientsRef
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const ingredientsRef = useRef<string[]>([]);
 
   const setPopularDrinks = () => {
     getPopularDrinks()
@@ -38,10 +65,12 @@ const SearchPage = () => {
   };
 
   const onSearchChangeHandler = (e: object & { target: { value: string } }) => {
+    console.log("search change");
     const newText = e.target.value;
     queryRef.current = newText;
 
     if (newText === "") {
+      console.log("getting popular 1");
       setPopularDrinks();
     } else {
       searchDrinkByName(newText)
@@ -58,17 +87,26 @@ const SearchPage = () => {
   };
 
   const onFilterChangeHandler = (e: object, value: string[]) => {
-    console.log(value);
+    console.log("filter change");
+    const ingredients = value;
+    ingredientsRef.current = ingredients;
 
-    if (value === [] || value.length === 0) {
+    if (ingredients === [] || ingredients.length === 0) {
+      console.log("getting popular 2");
       setPopularDrinks();
     } else {
-      searchDrinkByIngredients(value)
+      setErrorMessage(null);
+      searchDrinkByIngredients(ingredients)
         .then((res) => {
           const drinks = res.data.drinks;
           console.log(drinks);
-          if (drinks !== "None Found") {
-            setDrinks(drinks);
+          if (ingredientsRef.current === ingredients) {
+            if (drinks !== "None Found") {
+              setDrinks(drinks);
+            } else {
+              setDrinks(null);
+              setErrorMessage(formatErrorMessage(drinks));
+            }
           }
         })
         .catch((err) => console.error(err));
@@ -76,10 +114,8 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    if (!drinks) {
-      setPopularDrinks();
-    }
-  }, [drinks]);
+    setPopularDrinks();
+  }, []);
 
   return (
     <>
@@ -89,7 +125,7 @@ const SearchPage = () => {
         setPopularDrinks={setPopularDrinks}
       />
 
-      {!drinks && <Loading />}
+      {!drinks && !errorMessage && <Loading />}
       {drinks && (
         <Grid
           container
@@ -108,7 +144,9 @@ const SearchPage = () => {
               md={4}
               lg={3}
               className={classes.resultsGridItem}
-              style={{ height: largerThan600 ? "60vh" : "" }}
+              style={{
+                height: largerThan600 && drink.strIngredient1 ? "60vh" : "",
+              }}
             >
               <Link
                 to={`/drink/${drink.idDrink}`}
@@ -120,6 +158,7 @@ const SearchPage = () => {
           ))}
         </Grid>
       )}
+      {errorMessage && <Typography variant="h4">{errorMessage}</Typography>}
     </>
   );
 };
