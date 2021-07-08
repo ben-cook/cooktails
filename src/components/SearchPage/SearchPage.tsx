@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Container } from "@material-ui/core";
 import { Drink } from "../../interfaces";
 import DrinkCard from "./DrinkCard";
 import {
@@ -12,35 +12,37 @@ import {
 } from "../../api";
 import Loading from "../Loading";
 import SearchBar from "./SearchBar";
-import { replaceSpaceWithUnderscore } from "../../util";
+import { capitalizeEveryWord } from "../../util";
 
 const useStyles = makeStyles({
   resultsGridContainer: { flexGrow: 1 },
   resultsGridItem: {},
+  errorMessage: { margin: "auto" },
 });
 
 const formatErrorMessage = (ingredients: string[]): string => {
-  // const recursiveFormat = (ingredients: string[]): string => {
-  //   let string;
-  //   if (ingredients.length === 2) {
-  //     string = `${ingredients[0]} and ${ingredients[1]}`;
-  //   } else {
-  //     string = `${ingredients[0]}, ${recursiveFormat(ingredients.slice(1))}`;
-  //   }
+  let ingredientsUpper = ingredients.map(capitalizeEveryWord);
 
-  //   return string;
-  // };
+  const recursiveFormat = (ingredients: string[]): string => {
+    let string;
+    if (ingredients.length === 2) {
+      string = `${ingredients[0]} and ${ingredients[1]}`;
+    } else {
+      string = `${ingredients[0]}, ${recursiveFormat(ingredients.slice(1))}`;
+    }
 
-  // let ingredientString;
+    return string;
+  };
 
-  // if (ingredients.length === 1) {
-  //   ingredientString = ingredients[0];
-  // } else {
-  //   ingredientString = recursiveFormat(ingredients);
-  // }
+  let ingredientString;
 
-  // return `Can't find any drinks with ${ingredientString}.`;
-  return "can't find those drinks";
+  if (ingredients.length === 1) {
+    ingredientString = ingredientsUpper[0];
+  } else {
+    ingredientString = recursiveFormat(ingredientsUpper);
+  }
+
+  return `Can't find any drinks with ${ingredientString}.`;
 };
 
 const SearchPage = () => {
@@ -105,7 +107,7 @@ const SearchPage = () => {
               setDrinks(drinks);
             } else {
               setDrinks(null);
-              setErrorMessage(formatErrorMessage(drinks));
+              setErrorMessage(formatErrorMessage(ingredients));
             }
           }
         })
@@ -158,7 +160,17 @@ const SearchPage = () => {
           ))}
         </Grid>
       )}
-      {errorMessage && <Typography variant="h4">{errorMessage}</Typography>}
+      {errorMessage && (
+        <Container>
+          <Typography
+            variant="h4"
+            color="textPrimary"
+            className={classes.errorMessage}
+          >
+            {errorMessage}
+          </Typography>
+        </Container>
+      )}
     </>
   );
 };
