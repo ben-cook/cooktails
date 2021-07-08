@@ -13,6 +13,12 @@ export const capitalizeEveryWord = (s: string): string =>
     .map((s) => capitalizeString(s))
     .join(" ");
 
+export const replaceSpaceWithUnderscore = (s: string): string =>
+  s
+    .split("")
+    .map((char) => (char === " " ? "_" : char))
+    .join("");
+
 export const ingredientsFromDrink = (drink: Drink): string[] => {
   let ingredients: string[] = [];
   for (let i = 1; i < 16; i++) {
