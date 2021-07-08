@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/cooktails/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/cooktails/static/js/main.ccbd12a8.chunk.js",
-    "main.js.map": "/cooktails/static/js/main.ccbd12a8.chunk.js.map",
+    "main.js": "/cooktails/static/js/main.a4c5073c.chunk.js",
+    "main.js.map": "/cooktails/static/js/main.a4c5073c.chunk.js.map",
     "runtime-main.js": "/cooktails/static/js/runtime-main.74b5189d.js",
     "runtime-main.js.map": "/cooktails/static/js/runtime-main.74b5189d.js.map",
-    "static/js/2.08eebf8e.chunk.js": "/cooktails/static/js/2.08eebf8e.chunk.js",
-    "static/js/2.08eebf8e.chunk.js.map": "/cooktails/static/js/2.08eebf8e.chunk.js.map",
+    "static/js/2.3c72a385.chunk.js": "/cooktails/static/js/2.3c72a385.chunk.js",
+    "static/js/2.3c72a385.chunk.js.map": "/cooktails/static/js/2.3c72a385.chunk.js.map",
     "index.html": "/cooktails/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/cooktails/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.08eebf8e.chunk.js.LICENSE.txt": "/cooktails/static/js/2.08eebf8e.chunk.js.LICENSE.txt"
+    "static/js/2.3c72a385.chunk.js.LICENSE.txt": "/cooktails/static/js/2.3c72a385.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.74b5189d.js",
-    "static/js/2.08eebf8e.chunk.js",
+    "static/js/2.3c72a385.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.ccbd12a8.chunk.js"
+    "static/js/main.a4c5073c.chunk.js"
   ]
 }
