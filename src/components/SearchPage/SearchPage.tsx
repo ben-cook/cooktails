@@ -1,20 +1,20 @@
 import { useEffect, useState, useRef } from "react";
-import { Drink } from "../interfaces";
-import DrinkCard from "./DrinkCard";
-import { getPopularDrinks, searchDrinkByName } from "../api";
-import { Grid, TextField } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { Link } from "react-router-dom";
-import Loading from "./Loading";
+import { Grid } from "@material-ui/core";
+import { Drink } from "../../interfaces";
+import DrinkCard from "./DrinkCard";
+import { getPopularDrinks, searchDrinkByName } from "../../api";
+import Loading from "../Loading";
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles({
-  gridContainer: { flexGrow: 1 },
-  gridItem: {},
-  searchbar: { marginTop: "2vh", marginBottom: "2vh", width: "100%" },
+  resultsGridContainer: { flexGrow: 1 },
+  resultsGridItem: {},
 });
 
-const Search = () => {
+const SearchPage = () => {
   const classes = useStyles();
   const largerThan600 = useMediaQuery("(min-width:600px)");
 
@@ -59,12 +59,8 @@ const Search = () => {
 
   return (
     <>
-      <TextField
-        className={classes.searchbar}
-        label="Search for a drink"
-        variant="outlined"
-        onChange={onChangeHandler}
-      />
+      <SearchBar onChangeHandler={onChangeHandler} />
+
       {!drinks && <Loading />}
       {drinks && (
         <Grid
@@ -73,7 +69,7 @@ const Search = () => {
           justifyContent="flex-start"
           alignItems="center"
           spacing={2}
-          className={classes.gridContainer}
+          className={classes.resultsGridContainer}
         >
           {drinks.map((drink: Drink) => (
             <Grid
@@ -83,7 +79,7 @@ const Search = () => {
               sm={6}
               md={4}
               lg={3}
-              className={classes.gridItem}
+              className={classes.resultsGridItem}
               style={{ height: largerThan600 ? "60vh" : "" }}
             >
               <Link
@@ -100,4 +96,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchPage;

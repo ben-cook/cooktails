@@ -1,8 +1,8 @@
-import { useGetIngredientsByNameQuery } from "../redux/reduxAPI";
+import { useGetIngredientsByNameQuery } from "../../redux/reduxAPI";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Ingredient } from "../interfaces";
-import Loading from "./Loading";
+import { Ingredient } from "../../interfaces";
+import Loading from "../Loading";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },

@@ -1,10 +1,10 @@
-import { useGetDrinkByIDQuery } from "../redux/reduxAPI";
+import { useGetDrinkByIDQuery } from "../../redux/reduxAPI";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drink } from "../interfaces";
+import { Drink } from "../../interfaces";
 import ReactPlayer from "react-player/youtube";
-import IngredientTable from "./IngredientTable";
-import Loading from "./Loading";
+import IngredientTable from "../SearchPage/IngredientTable";
+import Loading from "../Loading";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
