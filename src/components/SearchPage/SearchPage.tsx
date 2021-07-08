@@ -5,7 +5,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Grid } from "@material-ui/core";
 import { Drink } from "../../interfaces";
 import DrinkCard from "./DrinkCard";
-import { getPopularDrinks, searchDrinkByName } from "../../api";
+import {
+  getPopularDrinks,
+  searchDrinkByIngredients,
+  searchDrinkByName,
+} from "../../api";
 import Loading from "../Loading";
 import SearchBar from "./SearchBar";
 
@@ -21,6 +25,8 @@ const SearchPage = () => {
   const queryRef = useRef("");
   const [drinks, setDrinks] = useState<Drink[] | null>(null);
 
+  // const ingredientsRef
+
   const setPopularDrinks = () => {
     getPopularDrinks()
       .then((res) => {
@@ -31,7 +37,7 @@ const SearchPage = () => {
       .catch((err) => console.error(err));
   };
 
-  const onChangeHandler = (e: object & { target: { value: string } }) => {
+  const onSearchChangeHandler = (e: object & { target: { value: string } }) => {
     const newText = e.target.value;
     queryRef.current = newText;
 
@@ -41,10 +47,28 @@ const SearchPage = () => {
       searchDrinkByName(newText)
         .then((res) => {
           if (queryRef.current === newText) {
-            let drinks = res.data.drinks;
+            const drinks = res.data.drinks;
             if (drinks) {
               setDrinks(drinks);
             }
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  };
+
+  const onFilterChangeHandler = (e: object, value: string[]) => {
+    console.log(value);
+
+    if (value === [] || value.length === 0) {
+      setPopularDrinks();
+    } else {
+      searchDrinkByIngredients(value)
+        .then((res) => {
+          const drinks = res.data.drinks;
+          console.log(drinks);
+          if (drinks !== "None Found") {
+            setDrinks(drinks);
           }
         })
         .catch((err) => console.error(err));
@@ -59,7 +83,11 @@ const SearchPage = () => {
 
   return (
     <>
-      <SearchBar onChangeHandler={onChangeHandler} />
+      <SearchBar
+        onChangeHandler={onSearchChangeHandler}
+        onFilterChangeHandler={onFilterChangeHandler}
+        setPopularDrinks={setPopularDrinks}
+      />
 
       {!drinks && <Loading />}
       {drinks && (

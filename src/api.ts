@@ -1,5 +1,9 @@
 import axios from "axios";
-import { REACT_APP_API_KEY, REACT_APP_CORS_PROXY_URL } from "./util";
+import {
+  REACT_APP_API_KEY,
+  REACT_APP_CORS_PROXY_URL,
+  replaceSpaceWithUnderscore,
+} from "./util";
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
@@ -29,4 +33,14 @@ export const getDrinkByID = (id: string) => {
 
 export const searchIngredientByName = (name: string) => {
   return axios(withCors(`${baseURL}/search.php?i=${name}`), { headers });
+};
+
+export const searchDrinkByIngredients = (ingredients: string[]) => {
+  return axios(
+    withCors(
+      `${baseURL}/filter.php?i=${ingredients
+        .map((ingredient) => replaceSpaceWithUnderscore(ingredient))
+        .reduce((prev, cur) => `${prev},${cur}`)}`
+    )
+  );
 };
