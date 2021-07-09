@@ -1,17 +1,35 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { sortedIngredients as ingredients } from "./ingredients";
-import { Grid, TextField, Paper, Container } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  Paper,
+  Container,
+  Button,
+  Typography,
+  Box,
+} from "@material-ui/core";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { capitalizeEveryWord } from "../../util";
+import { getRandomDrink } from "../../api";
 
 const useStyles = makeStyles({
   searchGridContainer: { flexGrow: 1, width: "100%" },
   searchbar: { marginTop: "2vh", marginBottom: "2vh", width: "100%" },
   filterToggle: { margin: "auto", "&:hover": { cursor: "pointer" } },
-  ingredientsAutocomplete: {},
-  optionsPaper: { marginBottom: "2vh" },
+  ingredientsAutocomplete: { paddingTop: "2vh" },
+  randomDrinkButton: {
+    marginBottom: "2vh",
+    textTransform: "capitalize",
+    margin: "auto",
+  },
+  optionsPaper: {
+    marginBottom: "2vh",
+    justifyContent: "center",
+  },
 });
 
 interface SearchBarProps {
@@ -26,11 +44,25 @@ const SearchBar = ({
   setPopularDrinks,
 }: SearchBarProps) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const redirectTo = (url: string): void => {
+    history.push(url);
+  };
 
   const [open, setOpen] = useState<boolean>(false);
 
   const changeOpen = () => {
     setOpen(!open);
+  };
+
+  const randomDrinkHandler = () => {
+    getRandomDrink()
+      .then((res) => {
+        const drink = res.data.drinks[0];
+        redirectTo(`/drink/${drink.idDrink}`);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -62,33 +94,38 @@ const SearchBar = ({
       {open && (
         <Paper className={classes.optionsPaper}>
           <Container>
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-evenly"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item zeroMinWidth xs={12}>
-                <Autocomplete
-                  multiple
-                  id="tags-outlined"
-                  options={ingredients}
-                  getOptionLabel={(option) => capitalizeEveryWord(option)}
-                  filterSelectedOptions
-                  className={classes.ingredientsAutocomplete}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Filter by ingredients instead!"
-                      placeholder="+"
-                    />
-                  )}
-                  onChange={onFilterChangeHandler}
+            <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={ingredients}
+              getOptionLabel={(option) => capitalizeEveryWord(option)}
+              filterSelectedOptions
+              className={classes.ingredientsAutocomplete}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Filter by ingredients instead!"
+                  placeholder="+"
                 />
-              </Grid>
-            </Grid>
+              )}
+              onChange={onFilterChangeHandler}
+            />
+            <Typography variant="h6" align="center">
+              or...
+            </Typography>
+            <Box textAlign="center">
+              <Button
+                variant="outlined"
+                color="default"
+                className={classes.randomDrinkButton}
+                // fullWidth
+              >
+                <Typography variant="body1" onClick={randomDrinkHandler}>
+                  Random cocktail
+                </Typography>
+              </Button>
+            </Box>
           </Container>
         </Paper>
       )}

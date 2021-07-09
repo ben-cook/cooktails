@@ -44,3 +44,7 @@ export const searchDrinkByIngredients = (ingredients: string[]) => {
     )
   );
 };
+
+export const getRandomDrink = () => {
+  return axios(withCors(`${baseURL}/random.php?`));
+};
