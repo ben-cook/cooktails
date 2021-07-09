@@ -5,6 +5,7 @@ import { Drink } from "../../interfaces";
 import ReactPlayer from "react-player/youtube";
 import IngredientTable from "../SearchPage/IngredientTable";
 import Loading from "../Loading";
+import { ReactElement } from "react";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
@@ -20,9 +21,17 @@ const useStyles = makeStyles({
   },
 });
 
-const DrinkPage = ({ id }: { id: string }) => {
-  const classes = useStyles();
+type DrinkPageProps = { id?: string; drinkObject?: Drink };
 
+const DrinkPage = (props: DrinkPageProps) => {
+  if (props.id) {
+    return <DrinkPageWithAPIData id={props.id} />;
+  } else {
+    return <DrinkPageContents drink={props.drinkObject as Drink} />;
+  }
+};
+
+const DrinkPageWithAPIData = ({ id }: { id: string }) => {
   const { data, error, isLoading } = useGetDrinkByIDQuery(id);
 
   if (isLoading) {
@@ -33,30 +42,36 @@ const DrinkPage = ({ id }: { id: string }) => {
     return <h6>error!</h6>;
   }
 
-  const drinkInfo = data!.drinks[0] as Drink;
+  const drinkInfo: Drink = data!.drinks[0] as Drink;
   console.log(drinkInfo);
+
+  return <DrinkPageContents drink={drinkInfo} />;
+};
+
+const DrinkPageContents = ({ drink }: { drink: Drink }): ReactElement => {
+  const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      {drinkInfo.strDrinkThumb && (
-        <CardMedia image={drinkInfo.strDrinkThumb} className={classes.image} />
+      {drink.strDrinkThumb && (
+        <CardMedia image={drink.strDrinkThumb} className={classes.image} />
       )}
 
       <CardContent>
         <Typography variant="h2">
-          {drinkInfo.strDrink}
-          {/* <Typography variant="body1">{drinkInfo.idDrink}</Typography> */}
+          {drink.strDrink}
+          {/* <Typography variant="body1">{drink.idDrink}</Typography> */}
         </Typography>
         <Typography variant="h4">Recipe</Typography>
-        <Typography variant="h6">{drinkInfo.strInstructions}</Typography>
+        <Typography variant="h6">{drink.strInstructions}</Typography>
 
         <div className={classes.ingredients}>
-          <IngredientTable drink={drinkInfo} />
+          <IngredientTable drink={drink} />
         </div>
 
-        {drinkInfo.strVideo && (
+        {drink.strVideo && (
           <ReactPlayer
-            url={drinkInfo.strVideo}
+            url={drink.strVideo}
             className={classes.video}
             width="80%"
           />

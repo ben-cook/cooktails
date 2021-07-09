@@ -6,7 +6,6 @@ import {
   TextField,
   Paper,
   Container,
-  Button,
   Typography,
   Box,
 } from "@material-ui/core";
@@ -14,7 +13,7 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { capitalizeEveryWord } from "../../util";
-import { getRandomDrink } from "../../api";
+import RandomDrinkButton from "../RandomDrinkButton";
 
 const useStyles = makeStyles({
   searchGridContainer: { flexGrow: 1, width: "100%" },
@@ -57,12 +56,7 @@ const SearchBar = ({
   };
 
   const randomDrinkHandler = () => {
-    getRandomDrink()
-      .then((res) => {
-        const drink = res.data.drinks[0];
-        redirectTo(`/drink/${drink.idDrink}`);
-      })
-      .catch((err) => console.error(err));
+    redirectTo("/random");
   };
 
   return (
@@ -114,17 +108,13 @@ const SearchBar = ({
             <Typography variant="h6" align="center">
               or...
             </Typography>
+
             <Box textAlign="center">
-              <Button
-                variant="outlined"
-                color="default"
+              <RandomDrinkButton
+                randomDrinkHandler={randomDrinkHandler}
                 className={classes.randomDrinkButton}
-                // fullWidth
-              >
-                <Typography variant="body1" onClick={randomDrinkHandler}>
-                  Random cocktail
-                </Typography>
-              </Button>
+                buttonText="Random Cocktail"
+              />
             </Box>
           </Container>
         </Paper>
