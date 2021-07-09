@@ -25,8 +25,12 @@ const formatErrorMessage = (ingredients: string[]): string => {
 
   const recursiveFormat = (ingredients: string[]): string => {
     let string;
-    if (ingredients.length === 2) {
-      string = `${ingredients[0]} and ${ingredients[1]}`;
+    if (ingredients.length === 1) {
+      string = ingredients[0];
+    } else if (ingredients.length === 2) {
+      string = `${recursiveFormat(
+        ingredients.slice(0, 1)
+      )} and ${recursiveFormat(ingredients.slice(1))}`;
     } else {
       string = `${ingredients[0]}, ${recursiveFormat(ingredients.slice(1))}`;
     }
@@ -34,15 +38,7 @@ const formatErrorMessage = (ingredients: string[]): string => {
     return string;
   };
 
-  let ingredientString;
-
-  if (ingredients.length === 1) {
-    ingredientString = ingredientsUpper[0];
-  } else {
-    ingredientString = recursiveFormat(ingredientsUpper);
-  }
-
-  return `Can't find any drinks with ${ingredientString}.`;
+  return `Couldn't find any drinks with ${recursiveFormat(ingredientsUpper)}.`;
 };
 
 const SearchPage = () => {
@@ -166,6 +162,7 @@ const SearchPage = () => {
             variant="h4"
             color="textPrimary"
             className={classes.errorMessage}
+            align="center"
           >
             {errorMessage}
           </Typography>
