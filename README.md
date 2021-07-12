@@ -1,3 +1,5 @@
 # Cooktails
 
-Cooktails was made for CISSA's Winterhack 2021 by Ben Cook
+[Cooktails](https://ben-cook.github.io/cooktails/#/) is a web app that serves all your cocktail needs. It was created as my entry to CISSA's Winterhack 2021 Hackathon. All data is sourced from https://www.thecocktaildb.com.
+
+### [Click here to check it out!](https://ben-cook.github.io/cooktails/#/)
