@@ -17,7 +17,7 @@ import RandomDrinkButton from "../RandomDrinkButton";
 
 const useStyles = makeStyles({
   searchGridContainer: { flexGrow: 1, width: "100%" },
-  searchbar: { marginTop: "2vh", marginBottom: "2vh", width: "100%" },
+  searchbar: { marginBottom: "2vh", width: "100%" },
   filterToggle: { margin: "auto", "&:hover": { cursor: "pointer" } },
   ingredientsAutocomplete: { paddingTop: "2vh" },
   randomDrinkButton: {

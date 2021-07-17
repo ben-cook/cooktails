@@ -57,6 +57,7 @@ const SearchPage = () => {
       .then((res) => {
         let drinks = res.data.drinks;
         setDrinks(drinks);
+        setErrorMessage(null)
         console.log(drinks);
       })
       .catch((err) => console.error(err));
