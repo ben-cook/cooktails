@@ -8,16 +8,15 @@ import {
   Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drink } from "../../interfaces";
-import { ingredientsFromDrink, measuresFromDrink } from "../../util";
 import { useHistory } from "react-router-dom";
+import { DrinkData } from "../../interfaces";
 
 const useStyles = makeStyles({
   table: {},
   row: { "&:hover": { cursor: "pointer" } },
 });
 
-const IngredientTable = ({ drink }: { drink: Drink }) => {
+const IngredientTable = ({ drink }: { drink: DrinkData }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -25,17 +24,12 @@ const IngredientTable = ({ drink }: { drink: Drink }) => {
     history.push(url);
   };
 
-  const ingredients = ingredientsFromDrink(drink);
-  const measures = measuresFromDrink(drink);
-
-  const rows = ingredients.map((elem, idx) => {
+  const rows = drink.ingredients.map((ingredient, idx) => {
     return {
-      ingredient: elem,
-      measure: idx < measures.length ? measures[idx] : "",
+      ingredient,
+      measure: idx < drink.measures.length ? drink.measures[idx] : "",
     };
   });
-
-  console.log(rows);
 
   return (
     <TableContainer component={Paper}>
@@ -49,11 +43,11 @@ const IngredientTable = ({ drink }: { drink: Drink }) => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              onClick={() => redirectTo(`/ingredient/${row.ingredient}/`)}
-              key={row.ingredient}
+              onClick={() => redirectTo(`/ingredient/${row.ingredient.name}/`)}
+              key={row.ingredient.name}
               className={classes.row}
             >
-              <TableCell>{row.ingredient}</TableCell>
+              <TableCell>{row.ingredient.name}</TableCell>
               <TableCell>{row.measure}</TableCell>
             </TableRow>
           ))}

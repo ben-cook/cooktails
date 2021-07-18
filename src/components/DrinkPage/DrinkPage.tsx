@@ -1,11 +1,14 @@
-import { useGetDrinkByIDQuery } from "../../redux/reduxAPI";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Drink } from "../../interfaces";
 import ReactPlayer from "react-player/youtube";
-import IngredientTable from "../SearchPage/IngredientTable";
+import IngredientTable from "./IngredientTable";
 import Loading from "../Loading";
-import { ReactElement } from "react";
+import { useQuery } from "@apollo/client";
+import {
+  DrinkSearchData,
+  DrinkSearchVariables,
+} from "../../apollo/DrinkSearchByName";
+import { DRINK_SEARCH_BY_NAME } from "../../apollo/DrinkSearchByName";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
@@ -21,57 +24,51 @@ const useStyles = makeStyles({
   },
 });
 
-type DrinkPageProps = { id?: string; drinkObject?: Drink };
+type DrinkPageProps = { name: string };
 
-const DrinkPage = (props: DrinkPageProps) => {
-  if (props.id) {
-    return <DrinkPageWithAPIData id={props.id} />;
-  } else {
-    return <DrinkPageContents drink={props.drinkObject as Drink} />;
-  }
-};
+const DrinkPage = ({ name }: DrinkPageProps) => {
+  const classes = useStyles();
+  const { loading, data } = useQuery<DrinkSearchData, DrinkSearchVariables>(
+    DRINK_SEARCH_BY_NAME,
+    {
+      variables: {
+        findDrinkByNameName: name,
+      },
+    }
+  );
 
-const DrinkPageWithAPIData = ({ id }: { id: string }) => {
-  const { data, error, isLoading } = useGetDrinkByIDQuery(id);
-
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
 
-  if (error) {
-    return <h6>error!</h6>;
-  }
-
-  const drinkInfo: Drink = data!.drinks[0] as Drink;
-  console.log(drinkInfo);
-
-  return <DrinkPageContents drink={drinkInfo} />;
-};
-
-const DrinkPageContents = ({ drink }: { drink: Drink }): ReactElement => {
-  const classes = useStyles();
-
   return (
     <Card className={classes.root}>
-      {drink.strDrinkThumb && (
-        <CardMedia image={drink.strDrinkThumb} className={classes.image} />
+      {data?.findDrinkByName?.strDrinkThumb && (
+        <CardMedia
+          image={data.findDrinkByName.strDrinkThumb}
+          className={classes.image}
+        />
       )}
 
       <CardContent>
         <Typography variant="h2">
-          {drink.strDrink}
+          {data?.findDrinkByName?.name}
           {/* <Typography variant="body1">{drink.idDrink}</Typography> */}
         </Typography>
         <Typography variant="h4">Recipe</Typography>
-        <Typography variant="h6">{drink.strInstructions}</Typography>
+        <Typography variant="h6">
+          {data?.findDrinkByName?.instructions}
+        </Typography>
 
-        <div className={classes.ingredients}>
-          <IngredientTable drink={drink} />
-        </div>
+        {data && (
+          <div className={classes.ingredients}>
+            <IngredientTable drink={data.findDrinkByName} />
+          </div>
+        )}
 
-        {drink.strVideo && (
+        {data?.findDrinkByName?.strVideo && (
           <ReactPlayer
-            url={drink.strVideo}
+            url={data?.findDrinkByName?.strVideo}
             className={classes.video}
             width="80%"
           />

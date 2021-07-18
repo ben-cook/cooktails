@@ -1,5 +1,3 @@
-import { Drink } from "./interfaces";
-
 export const REACT_APP_API_KEY = 9973533;
 export const REACT_APP_CORS_PROXY_URL =
   "https://fierce-mountain-04762.herokuapp.com/";
@@ -18,27 +16,3 @@ export const replaceSpaceWithUnderscore = (s: string): string =>
     .split("")
     .map((char) => (char === " " ? "_" : char))
     .join("");
-
-export const ingredientsFromDrink = (drink: Drink): string[] => {
-  let ingredients: string[] = [];
-  for (let i = 1; i < 16; i++) {
-    let ingredient = drink[`strIngredient${i}` as keyof Drink];
-    if (ingredient) {
-      ingredients.push(capitalizeEveryWord(ingredient));
-    }
-  }
-
-  return ingredients;
-};
-
-export const measuresFromDrink = (drink: Drink): string[] => {
-  let measures: string[] = [];
-  for (let i = 1; i < 16; i++) {
-    let measure = drink[`strMeasure${i}` as keyof Drink];
-    if (measure) {
-      measures.push(measure);
-    }
-  }
-
-  return measures;
-};

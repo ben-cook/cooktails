@@ -1,8 +1,6 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { ReactElement } from "react";
-import { Drink } from "../../interfaces";
 import { makeStyles } from "@material-ui/core/styles";
-import { ingredientsFromDrink } from "../../util";
 
 const useStyles = makeStyles({
   root: { height: "100%" },
@@ -11,7 +9,15 @@ const useStyles = makeStyles({
   },
 });
 
-const DrinkCard = ({ drink }: { drink: Drink }): ReactElement => {
+export interface DrinkCardProps {
+  name: string;
+  ingredients: {
+    name: string;
+  }[];
+  strDrinkThumb: string;
+}
+
+const DrinkCard = ({ drink }: { drink: DrinkCardProps }): ReactElement => {
   const classes = useStyles();
 
   return (
@@ -21,12 +27,12 @@ const DrinkCard = ({ drink }: { drink: Drink }): ReactElement => {
       )}
 
       <CardContent>
-        <Typography variant="h6">{drink.strDrink}</Typography>
+        <Typography variant="h6">{drink.name}</Typography>
         {/* <Typography variant="h6">{drink.strDrinkThumb}</Typography> */}
 
-        {ingredientsFromDrink(drink).map((ingredient, idx) => (
+        {drink.ingredients.map((ingredient, idx) => (
           <Typography variant="body1" key={idx}>
-            {ingredient}
+            {ingredient.name}
           </Typography>
         ))}
 
