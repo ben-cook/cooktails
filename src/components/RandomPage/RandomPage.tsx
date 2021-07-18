@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { getRandomDrink } from "../../api";
 import DrinkPage from "../DrinkPage/DrinkPage";
 import { ReactElement } from "react";
 import Loading from "../Loading";
@@ -25,6 +23,10 @@ const RandomPage = (): ReactElement => {
     RANDOM_DRINK
   );
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       {data?.randomDrink.name && <DrinkPage name={data?.randomDrink.name} />}
@@ -36,19 +38,6 @@ const RandomPage = (): ReactElement => {
           buttonText="See another random cocktail!"
         />
       </Box>
-
-      {/* <Box textAlign="center">
-        <Button
-          variant="outlined"
-          color="default"
-          className={classes.randomDrinkButton}
-          // fullWidth
-        >
-          <Typography variant="body1" onClick={randomDrinkHandler}>
-            See another random cocktail!
-          </Typography>
-        </Button>
-      </Box> */}
     </>
   );
 };
