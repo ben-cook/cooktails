@@ -1,6 +1,5 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Ingredient } from "../../interfaces";
 import Loading from "../Loading";
 import {
   IngredientSearchData,

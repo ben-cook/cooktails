@@ -1,9 +1,6 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Container } from "@material-ui/core";
-import DrinkCard, { DrinkCardProps } from "./DrinkCard";
-import Loading from "../Loading";
+import { Typography, Container } from "@material-ui/core";
 import SearchBar from "./SearchBar";
 import { capitalizeEveryWord } from "../../util";
 import { useQuery } from "@apollo/client";
@@ -55,7 +52,7 @@ const SearchPage = () => {
   type DisplayType = "search" | "ingredientFilter";
   const [displayType, setDisplayType] = useState<DisplayType>("search");
 
-  const { loading: searchDrinkLoading, data: searchDrinkData } = useQuery<
+  const { data: searchDrinkData } = useQuery<
     FuzzyDrinkSearchData,
     FuzzyDrinkSearchVariables
   >(FUZZY_DRINK_SEARCH, {
@@ -66,19 +63,16 @@ const SearchPage = () => {
     },
   });
 
-  const { loading: ingredientFilterLoading, data: ingredientFilterData } =
-    useQuery<FindDrinksWithIngredientsData, FindDrinksWithIngredientsVariables>(
-      FIND_DRINKS_WITH_INGREDIENTS,
-      {
-        variables: {
-          findDrinksWithIngredientsIngredientNames: filterInput,
-          findDrinksWithIngredientsOffset: 0,
-          findDrinksWithIngredientsLimit: 8,
-        },
-      }
-    );
-
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { data: ingredientFilterData } = useQuery<
+    FindDrinksWithIngredientsData,
+    FindDrinksWithIngredientsVariables
+  >(FIND_DRINKS_WITH_INGREDIENTS, {
+    variables: {
+      findDrinksWithIngredientsIngredientNames: filterInput,
+      findDrinksWithIngredientsOffset: 0,
+      findDrinksWithIngredientsLimit: 8,
+    },
+  });
 
   const onSearchChangeHandler = (e: object & { target: { value: string } }) => {
     setSearchInput(e.target.value);
@@ -97,8 +91,6 @@ const SearchPage = () => {
   if (searchDrinkData) {
     searchDataRef.current = searchDrinkData;
   }
-
-  console.log(ingredientFilterData);
 
   return (
     <>
