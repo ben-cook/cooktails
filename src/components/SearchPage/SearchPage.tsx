@@ -22,7 +22,7 @@ import SearchResults from "./SearchResults";
 const useStyles = makeStyles({
   resultsGridContainer: { flexGrow: 1 },
   resultsGridItem: {},
-  errorMessage: { margin: "auto" },
+  errorMessage: { margin: "auto", marginTop: "1.5em" },
 });
 
 const formatErrorMessage = (ingredients: string[]): string => {
@@ -98,6 +98,8 @@ const SearchPage = () => {
     searchDataRef.current = searchDrinkData;
   }
 
+  console.log(ingredientFilterData);
+
   return (
     <>
       <SearchBar
@@ -114,18 +116,20 @@ const SearchPage = () => {
           drinks={ingredientFilterData.findDrinksWithIngredients}
         />
       )}
-      {errorMessage && (
-        <Container>
-          <Typography
-            variant="h4"
-            color="textPrimary"
-            className={classes.errorMessage}
-            align="center"
-          >
-            {errorMessage}
-          </Typography>
-        </Container>
-      )}
+
+      {displayType === "ingredientFilter" &&
+        ingredientFilterData?.findDrinksWithIngredients.length === 0 && (
+          <Container>
+            <Typography
+              variant="h4"
+              color="textPrimary"
+              className={classes.errorMessage}
+              align="center"
+            >
+              {formatErrorMessage(filterInput)}
+            </Typography>
+          </Container>
+        )}
     </>
   );
 };

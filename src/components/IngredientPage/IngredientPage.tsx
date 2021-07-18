@@ -1,8 +1,13 @@
-import { useGetIngredientsByNameQuery } from "../../redux/reduxAPI";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Ingredient } from "../../interfaces";
 import Loading from "../Loading";
+import {
+  IngredientSearchData,
+  IngredientSearchVariables,
+  INGREDIENT_SEARCH_BY_NAME,
+} from "../../apollo/IngredientSearchByName";
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
@@ -17,23 +22,23 @@ const useStyles = makeStyles({
 const IngredientPage = ({ name }: { name: string }) => {
   const classes = useStyles();
 
-  const { data, error, isLoading } = useGetIngredientsByNameQuery(name);
+  const { loading, data } = useQuery<
+    IngredientSearchData,
+    IngredientSearchVariables
+  >(INGREDIENT_SEARCH_BY_NAME, {
+    variables: {
+      findIngredientByNameName: name,
+    },
+  });
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
-
-  if (error) {
-    return <h6>error!</h6>;
-  }
-
-  const ingredient = data!.ingredients[0] as Ingredient;
-  console.log(ingredient);
 
   return (
     <Card className={classes.root}>
       <CardMedia
-        image={`https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient?.replaceAll(
+        image={`https://www.thecocktaildb.com/images/ingredients/${data?.findIngredientByName.name?.replaceAll(
           " ",
           "%20"
         )}.png`}
@@ -42,13 +47,17 @@ const IngredientPage = ({ name }: { name: string }) => {
 
       <CardContent>
         <Typography variant="h2">
-          {ingredient.strIngredient}
+          {data?.findIngredientByName.name}
           {/* <Typography variant="body1">{ingredient.idIngredient}</Typography> */}
         </Typography>
-        <Typography variant="body1">{ingredient.strDescription}</Typography>
+        <Typography variant="body1">
+          {data?.findIngredientByName.description}
+        </Typography>
 
-        {ingredient.strABV && (
-          <Typography variant="h6">{ingredient.strABV}% ABV</Typography>
+        {data?.findIngredientByName.ABV && (
+          <Typography variant="h6">
+            {data?.findIngredientByName.ABV}% ABV
+          </Typography>
         )}
       </CardContent>
     </Card>
