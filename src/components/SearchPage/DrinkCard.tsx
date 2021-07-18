@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { Drink } from "../../interfaces";
 import { makeStyles } from "@material-ui/core/styles";
 import { ingredientsFromDrink } from "../../util";
+import { DrinkCardProps } from "./SearchPage";
 
 const useStyles = makeStyles({
   root: { height: "100%" },
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-const DrinkCard = ({ drink }: { drink: Drink }): ReactElement => {
+const DrinkCard = ({ drink }: { drink: DrinkCardProps }): ReactElement => {
   const classes = useStyles();
 
   return (
@@ -21,12 +22,12 @@ const DrinkCard = ({ drink }: { drink: Drink }): ReactElement => {
       )}
 
       <CardContent>
-        <Typography variant="h6">{drink.strDrink}</Typography>
+        <Typography variant="h6">{drink.name}</Typography>
         {/* <Typography variant="h6">{drink.strDrinkThumb}</Typography> */}
 
-        {ingredientsFromDrink(drink).map((ingredient, idx) => (
+        {drink.ingredients.map((ingredient, idx) => (
           <Typography variant="body1" key={idx}>
-            {ingredient}
+            {ingredient.name}
           </Typography>
         ))}
 

@@ -9,8 +9,8 @@ const Router = () => {
     <Switch>
       <Route
         exact
-        path="/drink/:id"
-        render={(props) => <DrinkPage id={props.match.params.id} />}
+        path="/drink/:name"
+        render={(props) => <DrinkPage name={props.match.params.name} />}
       />
       <Route
         exact

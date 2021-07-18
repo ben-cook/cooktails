@@ -46,7 +46,7 @@ const RandomPage = (): ReactElement => {
 
   return (
     <>
-      <DrinkPage drinkObject={drinkInfo as Drink} />
+      {/* <DrinkPage drinkObject={drinkInfo as Drink} /> */}
       <Box textAlign="center">
         <RandomDrinkButton
           randomDrinkHandler={randomDrinkHandler}

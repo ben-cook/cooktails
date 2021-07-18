@@ -34,14 +34,14 @@ const useStyles = makeStyles({
 interface SearchBarProps {
   onChangeHandler: (e: object & { target: { value: string } }) => void;
   onFilterChangeHandler: (e: object, value: string[]) => void;
-  setPopularDrinks: () => void;
+  // setPopularDrinks: () => void;
 }
 
 const SearchBar = ({
   onChangeHandler,
   onFilterChangeHandler,
-  setPopularDrinks,
-}: SearchBarProps) => {
+}: // setPopularDrinks,
+SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
