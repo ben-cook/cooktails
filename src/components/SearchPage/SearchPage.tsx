@@ -1,19 +1,23 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Grid, Typography, Container } from "@material-ui/core";
-import { Drink } from "../../interfaces";
-import DrinkCard from "./DrinkCard";
-import {
-  getPopularDrinks,
-  searchDrinkByIngredients,
-  searchDrinkByName,
-} from "../../api";
+import DrinkCard, { DrinkCardProps } from "./DrinkCard";
 import Loading from "../Loading";
 import SearchBar from "./SearchBar";
 import { capitalizeEveryWord } from "../../util";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import {
+  FuzzyDrinkSearchData,
+  FuzzyDrinkSearchVariables,
+  FUZZY_DRINK_SEARCH,
+} from "../../apollo/FuzzyDrinkSearch";
+import {
+  FindDrinksWithIngredientsData,
+  FindDrinksWithIngredientsVariables,
+  FIND_DRINKS_WITH_INGREDIENTS,
+} from "../../apollo/FindDrinksWithIngredients";
+import SearchResults from "./SearchResults";
 
 const useStyles = makeStyles({
   resultsGridContainer: { flexGrow: 1 },
@@ -42,52 +46,18 @@ const formatErrorMessage = (ingredients: string[]): string => {
   return `Couldn't find any drinks with ${recursiveFormat(ingredientsUpper)}.`;
 };
 
-const FUZZY_DRINK_SEARCH = gql`
-  query FuzzyDrinkSearch(
-    $fuzzySearchDrinksByNameSearchTerm: String
-    $fuzzySearchDrinksByNameLimit: Int
-    $fuzzySearchDrinksByNameOffset: Int
-  ) {
-    fuzzySearchDrinksByName(
-      searchTerm: $fuzzySearchDrinksByNameSearchTerm
-      limit: $fuzzySearchDrinksByNameLimit
-      offset: $fuzzySearchDrinksByNameOffset
-    ) {
-      name
-      ingredients {
-        name
-      }
-      strDrinkThumb
-    }
-  }
-`;
-
-export interface DrinkSearchIngredient {
-  name: string;
-}
-export interface DrinkCardProps {
-  name: string;
-  ingredients: DrinkSearchIngredient[];
-  strDrinkThumb: string;
-}
-interface DrinkSearchData {
-  fuzzySearchDrinksByName: DrinkCardProps[];
-}
-interface DrinkSearchVariables {
-  fuzzySearchDrinksByNameSearchTerm: string;
-  fuzzySearchDrinksByNameLimit: number;
-  fuzzySearchDrinksByNameOffset: number;
-}
-
 const SearchPage = () => {
   const classes = useStyles();
-  const largerThan600 = useMediaQuery("(min-width:600px)");
 
   const [searchInput, setSearchInput] = useState<string>("");
+  const [filterInput, setFilterInput] = useState<string[]>([]);
 
-  const { loading, error, data } = useQuery<
-    DrinkSearchData,
-    DrinkSearchVariables
+  type DisplayType = "search" | "ingredientFilter";
+  const [displayType, setDisplayType] = useState<DisplayType>("search");
+
+  const { loading: searchDrinkLoading, data: searchDrinkData } = useQuery<
+    FuzzyDrinkSearchData,
+    FuzzyDrinkSearchVariables
   >(FUZZY_DRINK_SEARCH, {
     variables: {
       fuzzySearchDrinksByNameSearchTerm: searchInput,
@@ -96,43 +66,36 @@ const SearchPage = () => {
     },
   });
 
+  const { loading: ingredientFilterLoading, data: ingredientFilterData } =
+    useQuery<FindDrinksWithIngredientsData, FindDrinksWithIngredientsVariables>(
+      FIND_DRINKS_WITH_INGREDIENTS,
+      {
+        variables: {
+          findDrinksWithIngredientsIngredientNames: filterInput,
+          findDrinksWithIngredientsOffset: 0,
+          findDrinksWithIngredientsLimit: 8,
+        },
+      }
+    );
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onSearchChangeHandler = (e: object & { target: { value: string } }) => {
     setSearchInput(e.target.value);
+    setDisplayType("search");
     console.log("change");
   };
 
   const onFilterChangeHandler = (e: object, value: string[]) => {
-    // console.log("filter change");
-    // const ingredients = value;
-    // ingredientsRef.current = ingredients;
-    // if (ingredients === [] || ingredients.length === 0) {
-    //   console.log("getting popular 2");
-    //   setPopularDrinks();
-    // } else {
-    //   setErrorMessage(null);
-    //   searchDrinkByIngredients(ingredients)
-    //     .then((res) => {
-    //       const drinks = res.data.drinks;
-    //       console.log(drinks);
-    //       if (ingredientsRef.current === ingredients) {
-    //         if (drinks !== "None Found") {
-    //           setDrinks(drinks);
-    //         } else {
-    //           setDrinks(null);
-    //           setErrorMessage(formatErrorMessage(ingredients));
-    //         }
-    //       }
-    //     })
-    //     .catch((err) => console.error(err));
-    // }
+    setFilterInput(value);
+    setDisplayType("ingredientFilter");
+    console.log("filter change");
   };
 
-  const myRef = useRef(data);
+  const searchDataRef = useRef(searchDrinkData);
 
-  if (data) {
-    myRef.current = data;
+  if (searchDrinkData) {
+    searchDataRef.current = searchDrinkData;
   }
 
   return (
@@ -140,44 +103,16 @@ const SearchPage = () => {
       <SearchBar
         onChangeHandler={onSearchChangeHandler}
         onFilterChangeHandler={onFilterChangeHandler}
-        // setPopularDrinks={setPopularDrinks}
       />
 
       {/* {!drinks && !errorMessage && <Loading />} */}
-      {myRef.current && (
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          spacing={2}
-          className={classes.resultsGridContainer}
-        >
-          {myRef.current.fuzzySearchDrinksByName.map(
-            (drink: DrinkCardProps) => (
-              <Grid
-                item
-                key={drink.name}
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                className={classes.resultsGridItem}
-                style={{
-                  height:
-                    largerThan600 && drink.ingredients.length > 0 ? "60vh" : "",
-                }}
-              >
-                <Link
-                  to={`/drink/${drink.name}`}
-                  style={{ color: "inherit", textDecoration: "inherit" }}
-                >
-                  <DrinkCard drink={drink} />
-                </Link>
-              </Grid>
-            )
-          )}
-        </Grid>
+      {displayType === "search" && searchDataRef.current && (
+        <SearchResults drinks={searchDataRef.current.fuzzySearchDrinksByName} />
+      )}
+      {displayType === "ingredientFilter" && ingredientFilterData && (
+        <SearchResults
+          drinks={ingredientFilterData.findDrinksWithIngredients}
+        />
       )}
       {errorMessage && (
         <Container>

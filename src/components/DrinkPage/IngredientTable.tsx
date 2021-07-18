@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { DrinkData } from "./DrinkPage";
+import { DrinkData } from "../../apollo/DrinkSearchByName";
 
 const useStyles = makeStyles({
   table: {},

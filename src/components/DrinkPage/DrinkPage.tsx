@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import ReactPlayer from "react-player/youtube";
 import IngredientTable from "./IngredientTable";
 import Loading from "../Loading";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import {
+  DrinkSearchData,
+  DrinkSearchVariables,
+} from "../../apollo/DrinkSearchByName";
+import { DRINK_SEARCH_BY_NAME } from "../../apollo/DrinkSearchByName";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
@@ -18,36 +23,6 @@ const useStyles = makeStyles({
     marginTop: "2em",
   },
 });
-
-const DRINK_SEARCH_BY_NAME = gql`
-  query SearchDrinkByName($findDrinkByNameName: String) {
-    findDrinkByName(name: $findDrinkByNameName) {
-      name
-      ingredients {
-        name
-      }
-      strDrinkThumb
-      instructions
-      measures
-      strVideo
-    }
-  }
-`;
-
-export interface DrinkData {
-  name: string;
-  ingredients: { name: string }[];
-  measures: string[];
-  strDrinkThumb: string;
-  instructions: string;
-  strVideo: string;
-}
-interface DrinkSearchData {
-  findDrinkByName: DrinkData;
-}
-interface DrinkSearchVariables {
-  findDrinkByNameName: string;
-}
 
 type DrinkPageProps = { name: string };
 

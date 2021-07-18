@@ -1,9 +1,6 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { ReactElement } from "react";
-import { Drink } from "../../interfaces";
 import { makeStyles } from "@material-ui/core/styles";
-import { ingredientsFromDrink } from "../../util";
-import { DrinkCardProps } from "./SearchPage";
 
 const useStyles = makeStyles({
   root: { height: "100%" },
@@ -11,6 +8,14 @@ const useStyles = makeStyles({
     height: "30vh",
   },
 });
+
+export interface DrinkCardProps {
+  name: string;
+  ingredients: {
+    name: string;
+  }[];
+  strDrinkThumb: string;
+}
 
 const DrinkCard = ({ drink }: { drink: DrinkCardProps }): ReactElement => {
   const classes = useStyles();
