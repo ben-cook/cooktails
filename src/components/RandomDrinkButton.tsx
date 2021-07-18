@@ -17,7 +17,7 @@ const RandomDrinkButton = ({
       className={className}
       // fullWidth
     >
-      <Typography variant="body1" onClick={randomDrinkHandler}>
+      <Typography variant="body1" onClick={() => randomDrinkHandler()}>
         {buttonText}
       </Typography>
     </Button>

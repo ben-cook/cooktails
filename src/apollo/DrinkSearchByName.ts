@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { DrinkData } from "../interfaces";
 
 export const DRINK_SEARCH_BY_NAME = gql`
   query SearchDrinkByName($findDrinkByNameName: String) {
@@ -15,14 +16,6 @@ export const DRINK_SEARCH_BY_NAME = gql`
   }
 `;
 
-export interface DrinkData {
-  name: string;
-  ingredients: { name: string }[];
-  measures: string[];
-  strDrinkThumb: string;
-  instructions: string;
-  strVideo: string;
-}
 export interface DrinkSearchData {
   findDrinkByName: DrinkData;
 }
