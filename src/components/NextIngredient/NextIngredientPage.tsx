@@ -14,10 +14,17 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { Fragment, useState } from "react";
-import { capitalizeEveryWord } from "../../util";
+import { capitalizeEveryWord, listInEnglish } from "../../util";
 import { makeStyles } from "@material-ui/core/styles";
-import { sortedIngredients as allIngredients } from "../ingredients";
+import { ingredients as allIngredients } from "../ingredients";
 import { useHistory } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import {
+  NextIngredientData,
+  NextIngredientVariables,
+  NEXT_INGREDIENT_PAGE_QUERY,
+} from "../../apollo/NextIngredientPageQuery";
+import IngredientToBuy from "./IngredientToBuy";
 
 const useStyles = makeStyles({
   ingredientsAutocomplete: { marginTop: "2vh" },
@@ -71,6 +78,16 @@ const NextIngredientPage = () => {
     value && addlistItem(value);
   };
 
+  const { data } = useQuery<NextIngredientData, NextIngredientVariables>(
+    NEXT_INGREDIENT_PAGE_QUERY,
+    {
+      variables: {
+        ingredientsToBuyIngredientNames: ingredients,
+        drinksThatCanBeMadeWithIngredientsIngredientNames: ingredients,
+      },
+    }
+  );
+
   return (
     <>
       <Grid
@@ -99,7 +116,7 @@ const NextIngredientPage = () => {
               <TextField
                 {...params}
                 variant="outlined"
-                label="Add an ingredient!"
+                label="Add ingredients you have!"
               />
             )}
             renderOption={(option) => (
@@ -137,9 +154,37 @@ const NextIngredientPage = () => {
           className={classes.nextButton}
           onClick={() => console.log("click")}
         >
-          <Typography variant="body1">Show me what to get next!</Typography>
+          <Typography variant="body1">
+            Show me what ingredient to get next!
+          </Typography>
         </Button>
       </Box>
+
+      <Typography>
+        {`You can make ${
+          data?.drinksThatCanBeMadeWithIngredients.length
+        } drink${
+          data?.drinksThatCanBeMadeWithIngredients.length === 1 ? "" : "s"
+        }`}
+        {data?.drinksThatCanBeMadeWithIngredients &&
+          data?.drinksThatCanBeMadeWithIngredients.length > 0 &&
+          `: ${listInEnglish(
+            data?.drinksThatCanBeMadeWithIngredients?.map((drink) => drink.name)
+          )}`}
+      </Typography>
+
+      {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
+        <Typography>What you should buy:</Typography>
+      )}
+
+      {data?.ingredientsToBuy &&
+        data?.ingredientsToBuy.length > 0 &&
+        [...data?.ingredientsToBuy]
+          .sort(
+            (a, b) =>
+              b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
+          )
+          .map((obj) => <IngredientToBuy {...obj} />)}
     </>
   );
 };

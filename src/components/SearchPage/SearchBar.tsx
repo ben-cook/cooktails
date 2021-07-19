@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { sortedIngredients as ingredients } from "../ingredients";
+import { ingredients } from "../ingredients";
 import {
   Grid,
   TextField,
@@ -35,14 +35,12 @@ const useStyles = makeStyles({
 interface SearchBarProps {
   onChangeHandler: (e: object & { target: { value: string } }) => void;
   onFilterChangeHandler: (e: object, value: string[]) => void;
-  // setPopularDrinks: () => void;
 }
 
 const SearchBar = ({
   onChangeHandler,
   onFilterChangeHandler,
-}: // setPopularDrinks,
-SearchBarProps) => {
+}: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
 
