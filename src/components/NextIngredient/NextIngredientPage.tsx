@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   Typography,
+  Grid,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import AddIcon from "@material-ui/icons/Add";
@@ -19,7 +20,7 @@ import { sortedIngredients as allIngredients } from "../ingredients";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
-  ingredientsAutocomplete: { paddingTop: "2vh" },
+  ingredientsAutocomplete: { marginTop: "2vh" },
   nextButton: {
     marginTop: "2vh",
     marginBottom: "2vh",
@@ -30,9 +31,13 @@ const useStyles = makeStyles({
     marginRight: "0.5em",
     height: "0.8em",
     width: "0.8em",
+  },
+  backButton: {
+    margin: "auto",
+    marginTop: "1vh",
     "&:hover": { cursor: "pointer" },
   },
-  backButton: { marginTop: "2vh", height: "1.5em", width: "1.5em" },
+  gridContainer: { flexGrow: 1, width: "100%" },
 });
 
 const NextIngredientPage = () => {
@@ -68,34 +73,47 @@ const NextIngredientPage = () => {
 
   return (
     <>
-      <NavigateBeforeIcon
-        className={classes.backButton}
-        onClick={() => history.goBack()}
-      />
-
-      <Autocomplete
-        id="tags-outlined"
-        options={allIngredients}
-        getOptionLabel={(option) => capitalizeEveryWord(option)}
-        filterSelectedOptions
-        className={classes.ingredientsAutocomplete}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            label="Add an ingredient!"
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+        className={classes.gridContainer}
+      >
+        <Grid item container xs={2} sm={1}>
+          <NavigateBeforeIcon
+            className={classes.backButton}
+            onClick={() => history.push("/")}
           />
-        )}
-        renderOption={(option) => (
-          <Fragment>
-            <AddIcon className={classes.addIcons} />{" "}
-            {capitalizeEveryWord(option)}
-          </Fragment>
-        )}
-        onChange={onIngredientSelect}
-        blurOnSelect
-        clearOnBlur
-      />
+        </Grid>
+
+        <Grid item xs zeroMinWidth>
+          <Autocomplete
+            id="tags-outlined"
+            options={allIngredients}
+            getOptionLabel={(option) => capitalizeEveryWord(option)}
+            filterSelectedOptions
+            className={classes.ingredientsAutocomplete}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Add an ingredient!"
+              />
+            )}
+            renderOption={(option) => (
+              <Fragment>
+                <AddIcon className={classes.addIcons} />{" "}
+                {capitalizeEveryWord(option)}
+              </Fragment>
+            )}
+            onChange={onIngredientSelect}
+            blurOnSelect
+            clearOnBlur
+          />
+        </Grid>
+      </Grid>
 
       <List component={Box}>
         {ingredients.map((ingredient) => (

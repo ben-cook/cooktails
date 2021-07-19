@@ -10,6 +10,7 @@ import {
   Box,
 } from "@material-ui/core";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { capitalizeEveryWord } from "../../util";
@@ -18,7 +19,7 @@ import RandomDrinkButton from "../RandomDrinkButton";
 const useStyles = makeStyles({
   searchGridContainer: { flexGrow: 1, width: "100%" },
   searchbar: { marginTop: "2vh", marginBottom: "2vh", width: "100%" },
-  filterToggle: { margin: "auto", "&:hover": { cursor: "pointer" } },
+  clickableIcons: { margin: "auto", "&:hover": { cursor: "pointer" } },
   ingredientsAutocomplete: { paddingTop: "2vh" },
   randomDrinkButton: {
     marginBottom: "2vh",
@@ -79,8 +80,14 @@ SearchBarProps) => {
         </Grid>
         <Grid item container xs={2} sm={1}>
           <FilterListIcon
-            className={classes.filterToggle}
+            className={classes.clickableIcons}
             onClick={changeOpen}
+          />
+        </Grid>
+        <Grid item container xs={2} sm={1}>
+          <NavigateNextIcon
+            className={classes.clickableIcons}
+            onClick={() => history.push("/next")}
           />
         </Grid>
       </Grid>
