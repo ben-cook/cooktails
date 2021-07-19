@@ -147,39 +147,46 @@ const NextIngredientPage = () => {
         ))}
       </List>
 
-      <Box textAlign="center">
-        <Button
-          variant="outlined"
-          color="default"
-          className={classes.nextButton}
-          onClick={() => console.log("click")}
-        >
-          <Typography variant="body1">
-            Show me what ingredient to get next!
-          </Typography>
-        </Button>
-      </Box>
+      {ingredients.length === 0 && (
+        <Typography variant="h4">
+          You can't make any drinks without any ingredients! Try adding some
+          ingredients to your bar.
+        </Typography>
+      )}
 
-      <Typography>
-        {`You can make ${
-          data?.drinksThatCanBeMadeWithIngredients.length
-        } drink${
-          data?.drinksThatCanBeMadeWithIngredients.length === 1 ? "" : "s"
-        }`}
-        {data?.drinksThatCanBeMadeWithIngredients &&
-          data?.drinksThatCanBeMadeWithIngredients.length > 0 &&
-          `: ${listInEnglish(
-            data?.drinksThatCanBeMadeWithIngredients?.map((drink) => drink.name)
-          )}`}
-      </Typography>
+      {ingredients.length > 0 &&
+        data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
+          <Typography variant="h4">
+            Almost there! Keep adding more ingredients to your bar.
+          </Typography>
+        )}
+
+      {data?.drinksThatCanBeMadeWithIngredients.length != 0 && (
+        <Typography variant="h6">
+          {`With these ingredients, you can make ${
+            data?.drinksThatCanBeMadeWithIngredients.length
+          } drink${
+            data?.drinksThatCanBeMadeWithIngredients.length === 1 ? ":" : "s:"
+          } 
+              ${
+                data?.drinksThatCanBeMadeWithIngredients &&
+                listInEnglish(
+                  data.drinksThatCanBeMadeWithIngredients.map(
+                    (drink) => drink.name
+                  )
+                )
+              }`}
+        </Typography>
+      )}
 
       {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
-        <Typography>What you should buy:</Typography>
+        <Typography variant="h6">Looking for inspiration?</Typography>
       )}
 
       {data?.ingredientsToBuy &&
         data?.ingredientsToBuy.length > 0 &&
         [...data?.ingredientsToBuy]
+          .slice(0, 8)
           .sort(
             (a, b) =>
               b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
