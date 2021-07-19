@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { sortedIngredients as ingredients } from "./ingredients";
+import { sortedIngredients as ingredients } from "../ingredients";
 import {
   Grid,
   TextField,
