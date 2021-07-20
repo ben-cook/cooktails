@@ -27,8 +27,6 @@ export const listInEnglish = (items: string[]): string => {
   const recursiveFormat = (innerItems: string[]): string => {
     let string;
 
-    console.log(innerItems);
-
     if (innerItems.length === 1) {
       string = innerItems[0];
     } else if (innerItems.length === 2) {

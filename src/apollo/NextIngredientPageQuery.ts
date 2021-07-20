@@ -11,24 +11,32 @@ export const NEXT_INGREDIENT_PAGE_QUERY = gql`
       }
       drinksThatCouldBeMade {
         name
+        strDrinkThumb
       }
     }
+
     drinksThatCanBeMadeWithIngredients(
       ingredientNames: $drinksThatCanBeMadeWithIngredientsIngredientNames
     ) {
       name
+      strDrinkThumb
     }
+
+    #ingredients {
+    #  name
+    #}
   }
 `;
 
 export interface IIngredientToBuy {
   ingredient: { name: string };
-  drinksThatCouldBeMade: { name: string }[];
+  drinksThatCouldBeMade: { name: string; strDrinkThumb: string }[];
 }
 
 export interface NextIngredientData {
   ingredientsToBuy: IIngredientToBuy[];
-  drinksThatCanBeMadeWithIngredients: { name: string }[];
+  drinksThatCanBeMadeWithIngredients: { name: string; strDrinkThumb: string }[];
+  // ingredients: { name: string }[];
 }
 
 export interface NextIngredientVariables {

@@ -1,4 +1,5 @@
 import "./index.css";
+import "typeface-roboto";
 
 import { ApolloProvider } from "@apollo/client";
 import React from "react";

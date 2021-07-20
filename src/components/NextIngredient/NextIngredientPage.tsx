@@ -1,18 +1,8 @@
 import { useQuery } from "@apollo/client";
-import {
-  Box,
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import RemoveIcon from "@material-ui/icons/Remove";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Fragment, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -22,9 +12,11 @@ import {
   NextIngredientData,
   NextIngredientVariables,
 } from "../../apollo/NextIngredientPageQuery";
-import { capitalizeEveryWord, listInEnglish } from "../../util";
+import { capitalizeEveryWord } from "../../util";
 import { ingredients as allIngredients } from "../ingredients";
-import IngredientToBuy from "./IngredientToBuy";
+import SmallDrinkCard from "./SmallDrinkCard";
+import SmallIngredientCard from "./SmallIngredientCard";
+import Suggestion from "./Suggestion";
 
 const useStyles = makeStyles({
   ingredientsAutocomplete: { marginTop: "2vh" },
@@ -45,6 +37,7 @@ const useStyles = makeStyles({
     "&:hover": { cursor: "pointer" },
   },
   gridContainer: { flexGrow: 1, width: "100%" },
+  cardContainer: { marginTop: "1vh" },
 });
 
 const NextIngredientPage = () => {
@@ -54,6 +47,7 @@ const NextIngredientPage = () => {
   const [ingredients, setIngredients] = useState<string[]>([]);
 
   const removeListItem = (item: string): void => {
+    // console.log(`removing ${item} from ${ingredients}`);
     let newIngredients: string[] = [];
     ingredients.forEach((ingredient) => {
       if (ingredient !== item) {
@@ -65,9 +59,12 @@ const NextIngredientPage = () => {
   };
 
   const addlistItem = (item: string): void => {
+    // console.log(`adding ${item} to ${ingredients}`);
     let newIngredients: string[] = [...ingredients];
-    newIngredients.push(item);
-    setIngredients(newIngredients);
+    if (!newIngredients.includes(item)) {
+      newIngredients.push(item);
+      setIngredients(newIngredients);
+    }
   };
 
   const onIngredientSelect = (
@@ -132,67 +129,89 @@ const NextIngredientPage = () => {
         </Grid>
       </Grid>
 
-      <List component={Box}>
-        {ingredients.map((ingredient) => (
-          <ListItem
-            key={ingredient}
-            button
-            onClick={() => removeListItem(ingredient)}
-          >
-            <ListItemIcon>
-              <RemoveIcon />
-            </ListItemIcon>
-            <ListItemText primary={ingredient} />
-          </ListItem>
-        ))}
-      </List>
-
+      <Typography variant="h4" style={{ marginTop: "1vh" }}>
+        Ingredients:
+      </Typography>
       {ingredients.length === 0 && (
-        <Typography variant="h4">
-          You can't make any drinks without any ingredients! Try adding some
-          ingredients to your bar.
+        <Typography variant="subtitle1" align="center">
+          Add an ingredient to get started.
+        </Typography>
+      )}
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="stretch"
+        spacing={2}
+        className={classes.cardContainer}
+      >
+        {ingredients.map((ingredient) => (
+          <Grid item key={ingredient} xs={12} sm={4} md={3} lg={2}>
+            <SmallIngredientCard
+              name={ingredient}
+              removeItem={removeListItem}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Typography variant="h4" style={{ marginTop: "1vh" }}>
+        Drinks:
+      </Typography>
+      {data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
+        <Typography variant="subtitle1" align="center">
+          Add more ingredients to see drinks that you can make.
+        </Typography>
+      )}
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="stretch"
+        spacing={2}
+        className={classes.cardContainer}
+      >
+        {data?.drinksThatCanBeMadeWithIngredients.map((drink) => (
+          <Grid item key={drink.name} xs={12} sm={4} md={3} lg={2}>
+            <SmallDrinkCard {...drink} />
+          </Grid>
+        ))}
+      </Grid>
+
+      {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
+        <Typography variant="h4" style={{ marginTop: "1vh" }}>
+          Suggestions:
         </Typography>
       )}
 
-      {ingredients.length > 0 &&
-        data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
-          <Typography variant="h4">
-            Almost there! Keep adding more ingredients to your bar.
-          </Typography>
-        )}
-
-      {data?.drinksThatCanBeMadeWithIngredients &&
-        data?.drinksThatCanBeMadeWithIngredients.length !== 0 && (
-          <Typography variant="h6">
-            {`With these ingredients, you can make ${
-              data?.drinksThatCanBeMadeWithIngredients.length
-            } drink${
-              data?.drinksThatCanBeMadeWithIngredients.length === 1 ? ":" : "s:"
-            } 
-              ${
-                data?.drinksThatCanBeMadeWithIngredients &&
-                listInEnglish(
-                  data.drinksThatCanBeMadeWithIngredients.map(
-                    (drink) => drink.name
-                  )
-                )
-              }`}
-          </Typography>
-        )}
-
-      {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
-        <Typography variant="h6">Looking for inspiration?</Typography>
-      )}
-
-      {data?.ingredientsToBuy &&
-        data?.ingredientsToBuy.length > 0 &&
-        [...data?.ingredientsToBuy]
-          .slice(0, 8)
-          .sort(
-            (a, b) =>
-              b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
-          )
-          .map((obj) => <IngredientToBuy {...obj} />)}
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="stretch"
+        spacing={2}
+        className={classes.cardContainer}
+      >
+        {data?.ingredientsToBuy &&
+          [...data?.ingredientsToBuy]
+            .sort(
+              (a, b) =>
+                b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
+            )
+            .slice(0, 8)
+            .map((ingredientToBuy, idx) => (
+              <Grid
+                item
+                key={ingredientToBuy.ingredient.name}
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+              >
+                <Suggestion {...ingredientToBuy} />
+              </Grid>
+            ))}
+      </Grid>
     </>
   );
 };
