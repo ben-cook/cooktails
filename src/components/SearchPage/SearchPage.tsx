@@ -13,7 +13,7 @@ import {
   FuzzyDrinkSearchData,
   FuzzyDrinkSearchVariables,
 } from "../../apollo/FuzzyDrinkSearch";
-import { capitalizeEveryWord } from "../../util";
+import { capitalizeEveryWord, listInEnglish } from "../../util";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
@@ -25,23 +25,7 @@ const useStyles = makeStyles({
 
 const formatErrorMessage = (ingredients: string[]): string => {
   let ingredientsUpper = ingredients.map(capitalizeEveryWord);
-
-  const recursiveFormat = (ingredients: string[]): string => {
-    let string;
-    if (ingredients.length === 1) {
-      string = ingredients[0];
-    } else if (ingredients.length === 2) {
-      string = `${recursiveFormat(
-        ingredients.slice(0, 1)
-      )} and ${recursiveFormat(ingredients.slice(1))}`;
-    } else {
-      string = `${ingredients[0]}, ${recursiveFormat(ingredients.slice(1))}`;
-    }
-
-    return string;
-  };
-
-  return `Couldn't find any drinks with ${recursiveFormat(ingredientsUpper)}.`;
+  return `Couldn't find any drinks with ${listInEnglish(ingredientsUpper)}.`;
 };
 
 const SearchPage = () => {

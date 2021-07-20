@@ -161,13 +161,14 @@ const NextIngredientPage = () => {
           </Typography>
         )}
 
-      {data?.drinksThatCanBeMadeWithIngredients.length != 0 && (
-        <Typography variant="h6">
-          {`With these ingredients, you can make ${
-            data?.drinksThatCanBeMadeWithIngredients.length
-          } drink${
-            data?.drinksThatCanBeMadeWithIngredients.length === 1 ? ":" : "s:"
-          } 
+      {data?.drinksThatCanBeMadeWithIngredients &&
+        data?.drinksThatCanBeMadeWithIngredients.length !== 0 && (
+          <Typography variant="h6">
+            {`With these ingredients, you can make ${
+              data?.drinksThatCanBeMadeWithIngredients.length
+            } drink${
+              data?.drinksThatCanBeMadeWithIngredients.length === 1 ? ":" : "s:"
+            } 
               ${
                 data?.drinksThatCanBeMadeWithIngredients &&
                 listInEnglish(
@@ -176,8 +177,8 @@ const NextIngredientPage = () => {
                   )
                 )
               }`}
-        </Typography>
-      )}
+          </Typography>
+        )}
 
       {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
         <Typography variant="h6">Looking for inspiration?</Typography>
