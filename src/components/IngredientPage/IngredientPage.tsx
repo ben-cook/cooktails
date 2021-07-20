@@ -7,7 +7,10 @@ import {
   IngredientSearchData,
   IngredientSearchVariables,
 } from "../../apollo/IngredientSearchByName";
-import { getIngredientImageURL } from "../../util";
+import {
+  fitParagraphIntoCharacterLimit,
+  getIngredientImageURL,
+} from "../../util";
 import Loading from "../Loading";
 
 const useStyles = makeStyles({
@@ -67,7 +70,12 @@ const IngredientPage = ({ name }: { name: string }) => {
         </Typography>
 
         <Typography variant="body1">
-          {data?.findIngredientByName.description}
+          {data?.findIngredientByName &&
+            fitParagraphIntoCharacterLimit(
+              data?.findIngredientByName.description,
+              800
+            )}
+          .
         </Typography>
       </CardContent>
     </Card>

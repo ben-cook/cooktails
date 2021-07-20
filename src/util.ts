@@ -49,3 +49,19 @@ export const getIngredientImageURL = (name: string): string => {
     "%20"
   )}.png`;
 };
+
+export const fitParagraphIntoCharacterLimit = (
+  paragraph: string,
+  characterLimit: number
+): string => {
+  let newParagraph = paragraph;
+  const sentences = paragraph.split(".");
+  let i = 0;
+
+  while (newParagraph.length > characterLimit) {
+    newParagraph = sentences.slice(0, sentences.length - 1 - i).join(".");
+    i++;
+  }
+
+  return newParagraph;
+};
