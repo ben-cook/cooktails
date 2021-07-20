@@ -58,7 +58,7 @@ const IngredientPage = ({ name }: { name: string }) => {
           {data?.findIngredientByName.alcoholic &&
             `alcoholic${
               data?.findIngredientByName.ABV
-                ? ` - ${data?.findIngredientByName.ABV}% ABV`
+                ? ` - ${data?.findIngredientByName.ABV}% abv`
                 : ""
             }`}
           {data?.findIngredientByName.alcoholic !== undefined &&

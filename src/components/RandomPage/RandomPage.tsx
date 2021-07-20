@@ -53,7 +53,7 @@ const RandomPage = (): ReactElement => {
             onClick={() => history.push("/")}
           />
         </Grid>
-        <Grid item container xs={4} sm={3}>
+        <Grid item container xs={10} sm={8} md={6} lg={4}>
           <RandomDrinkButton
             randomDrinkHandler={refetch}
             className={classes.randomDrinkButton}

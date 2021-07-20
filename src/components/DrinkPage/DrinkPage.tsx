@@ -52,12 +52,9 @@ const DrinkPage = ({ name }: DrinkPageProps) => {
       )}
 
       <CardContent>
-        <Typography variant="h2">
-          {data?.findDrinkByName?.name}
-          {/* <Typography variant="body1">{drink.idDrink}</Typography> */}
-        </Typography>
-        <Typography variant="h4">Recipe</Typography>
-        <Typography variant="h6">
+        <Typography variant="h2">{data?.findDrinkByName?.name}</Typography>
+        <Typography variant="h5">Instructions</Typography>
+        <Typography variant="body1">
           {data?.findDrinkByName?.instructions}
         </Typography>
 
