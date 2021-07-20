@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Fragment, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   NEXT_INGREDIENT_PAGE_QUERY,
@@ -174,7 +174,12 @@ const NextIngredientPage = () => {
       >
         {data?.drinksThatCanBeMadeWithIngredients.map((drink) => (
           <Grid item key={drink.name} xs={6} sm={4} md={3} lg={2}>
-            <SmallDrinkCard {...drink} />
+            <Link
+              to={`/drink/${drink.name}`}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <SmallDrinkCard {...drink} />
+            </Link>
           </Grid>
         ))}
       </Grid>

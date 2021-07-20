@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
 import { getIngredientImageURL } from "../../util";
@@ -49,18 +50,23 @@ const Suggestion = ({
       <Grid container justifyContent="center" alignItems="stretch">
         <Grid item xs className={classes.cardOutline}>
           {/* Image Card*/}
-          <Card variant="outlined" style={{ height: "100%" }}>
-            <CardMedia
-              image={getIngredientImageURL(ingredient.name)}
-              className={classes.image}
-            />
+          <Link
+            to={`/ingredient/${ingredient.name}`}
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <Card variant="outlined" style={{ height: "100%" }}>
+              <CardMedia
+                image={getIngredientImageURL(ingredient.name)}
+                className={classes.image}
+              />
 
-            <CardContent>
-              <Typography variant="h6" className={classes.text}>
-                {ingredient.name}
-              </Typography>
-            </CardContent>
-          </Card>
+              <CardContent>
+                <Typography variant="h6" className={classes.text}>
+                  {ingredient.name}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
         </Grid>
 
         {/* Arrow Icon*/}
@@ -95,18 +101,23 @@ const Suggestion = ({
               )}
 
               <Grid item xs className={classes.cardOutline}>
-                <Card variant="outlined" style={{ height: "100%" }}>
-                  <CardMedia
-                    image={drink.strDrinkThumb}
-                    className={classes.image}
-                  />
+                <Link
+                  to={`/drink/${drink.name}`}
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  <Card variant="outlined" style={{ height: "100%" }}>
+                    <CardMedia
+                      image={drink.strDrinkThumb}
+                      className={classes.image}
+                    />
 
-                  <CardContent>
-                    <Typography variant="h6" className={classes.text}>
-                      {drink.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                    <CardContent>
+                      <Typography variant="h6" className={classes.text}>
+                        {drink.name}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
               </Grid>
             </React.Fragment>
           ))}
