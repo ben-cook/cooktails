@@ -3,7 +3,6 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  CardProps,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,7 +31,7 @@ const SmallIngredientCard = ({
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       {removeItem && (
         <CardActions>
           <ClearIcon

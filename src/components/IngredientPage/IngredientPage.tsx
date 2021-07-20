@@ -38,7 +38,7 @@ const IngredientPage = ({ name }: { name: string }) => {
   }
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       {data?.findIngredientByName && (
         <CardMedia
           image={getIngredientImageURL(data?.findIngredientByName.name)}

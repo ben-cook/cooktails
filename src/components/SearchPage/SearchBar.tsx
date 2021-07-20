@@ -94,7 +94,7 @@ const SearchBar = ({
       </Grid>
 
       {open && (
-        <Paper className={classes.optionsPaper}>
+        <Paper className={classes.optionsPaper} variant="outlined">
           <Container>
             <Autocomplete
               multiple

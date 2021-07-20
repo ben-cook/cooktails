@@ -43,7 +43,7 @@ const DrinkPage = ({ name }: DrinkPageProps) => {
   }
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       {data?.findDrinkByName?.strDrinkThumb && (
         <CardMedia
           image={data.findDrinkByName.strDrinkThumb}

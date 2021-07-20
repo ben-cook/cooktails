@@ -21,7 +21,7 @@ const DrinkCard = ({ drink }: { drink: DrinkCardProps }): ReactElement => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       {drink.strDrinkThumb && (
         <CardMedia image={drink.strDrinkThumb} className={classes.image} />
       )}

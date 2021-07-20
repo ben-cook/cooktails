@@ -22,7 +22,7 @@ const SmallDrinkCard = ({
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       <CardMedia image={strDrinkThumb} className={classes.image} />
 
       <CardContent>
