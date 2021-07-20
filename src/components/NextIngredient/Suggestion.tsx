@@ -1,4 +1,11 @@
-import { CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
@@ -19,6 +26,11 @@ const useStyles = makeStyles({
     height: 200,
     width: 150,
   },
+  cardOutline: {
+    marginLeft: "1vw",
+    marginTop: "1vw",
+    marginRight: "1vw",
+  },
 });
 
 const Suggestion = ({
@@ -28,13 +40,15 @@ const Suggestion = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Paper variant="outlined" className={classes.root}>
       <Grid container justifyContent="center">
         <Grid item xs>
-          <CardMedia
-            image={getIngredientImageURL(ingredient.name)}
-            className={classes.image}
-          />
+          <Card variant="outlined" className={classes.cardOutline}>
+            <CardMedia
+              image={getIngredientImageURL(ingredient.name)}
+              className={classes.image}
+            />
+          </Card>
         </Grid>
 
         <Grid item style={{ width: "3em" }}>
@@ -53,7 +67,12 @@ const Suggestion = ({
 
         {drinksThatCouldBeMade.map((drink) => (
           <Grid item xs>
-            <CardMedia image={drink.strDrinkThumb} className={classes.image} />
+            <Card variant="outlined" className={classes.cardOutline}>
+              <CardMedia
+                image={drink.strDrinkThumb}
+                className={classes.image}
+              />
+            </Card>
           </Grid>
         ))}
       </Grid>
@@ -66,7 +85,7 @@ const Suggestion = ({
           {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}.
         </Typography>
       </CardContent>
-    </div>
+    </Paper>
   );
 };
 
