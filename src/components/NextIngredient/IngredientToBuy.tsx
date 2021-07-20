@@ -10,8 +10,8 @@ const IngredientToBuy = ({
     <>
       <Typography>If you bought {ingredient.name}, you could make:</Typography>
       <ul>
-        {drinksThatCouldBeMade.map((drink) => (
-          <li>
+        {drinksThatCouldBeMade.map((drink, idx) => (
+          <li key={idx}>
             <Typography>{drink.name}</Typography>
           </li>
         ))}
