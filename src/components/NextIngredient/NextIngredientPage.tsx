@@ -132,6 +132,11 @@ const NextIngredientPage = () => {
       <Typography variant="h4" style={{ marginTop: "1vh" }}>
         Ingredients:
       </Typography>
+      {ingredients.length === 0 && (
+        <Typography variant="subtitle1" align="center">
+          Add an ingredient to get started.
+        </Typography>
+      )}
       <Grid
         container
         direction="row"
@@ -153,6 +158,11 @@ const NextIngredientPage = () => {
       <Typography variant="h4" style={{ marginTop: "1vh" }}>
         Drinks:
       </Typography>
+      {data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
+        <Typography variant="subtitle1" align="center">
+          Add more ingredients to see drinks that you can make.
+        </Typography>
+      )}
       <Grid
         container
         direction="row"
@@ -168,9 +178,12 @@ const NextIngredientPage = () => {
         ))}
       </Grid>
 
-      <Typography variant="h4" style={{ marginTop: "1vh" }}>
-        Suggestions:
-      </Typography>
+      {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
+        <Typography variant="h4" style={{ marginTop: "1vh" }}>
+          Suggestions:
+        </Typography>
+      )}
+
       <Grid
         container
         direction="row"
@@ -179,66 +192,26 @@ const NextIngredientPage = () => {
         spacing={2}
         className={classes.cardContainer}
       >
-        {data?.ingredientsToBuy.map((ingredientToBuy) => (
-          <Grid
-            item
-            key={ingredientToBuy.ingredient.name}
-            xs={12}
-            sm={12}
-            md={6}
-            lg={6}
-          >
-            <Suggestion {...ingredientToBuy} />
-          </Grid>
-        ))}
+        {data?.ingredientsToBuy &&
+          [...data?.ingredientsToBuy]
+            .sort(
+              (a, b) =>
+                b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
+            )
+            .slice(0, 8)
+            .map((ingredientToBuy, idx) => (
+              <Grid
+                item
+                key={ingredientToBuy.ingredient.name}
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+              >
+                <Suggestion {...ingredientToBuy} />
+              </Grid>
+            ))}
       </Grid>
-
-      {/* {ingredients.length === 0 && (
-        <Typography variant="h4">
-          You can't make any drinks without any ingredients! Try adding some
-          ingredients to your bar.
-        </Typography>
-      )}
-
-      {ingredients.length > 0 &&
-        data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
-          <Typography variant="h4">
-            Almost there! Keep adding more ingredients to your bar.
-          </Typography>
-        )}
-
-      {data?.drinksThatCanBeMadeWithIngredients &&
-        data?.drinksThatCanBeMadeWithIngredients.length !== 0 && (
-          <Typography variant="h6">
-            {`With these ingredients, you can make ${
-              data?.drinksThatCanBeMadeWithIngredients.length
-            } drink${
-              data?.drinksThatCanBeMadeWithIngredients.length === 1 ? ":" : "s:"
-            } 
-              ${
-                data?.drinksThatCanBeMadeWithIngredients &&
-                listInEnglish(
-                  data.drinksThatCanBeMadeWithIngredients.map(
-                    (drink) => drink.name
-                  )
-                )
-              }`}
-          </Typography>
-        )}
-
-      {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
-        <Typography variant="h6">Looking for inspiration?</Typography>
-      )}
-
-      {data?.ingredientsToBuy &&
-        data?.ingredientsToBuy.length > 0 &&
-        [...data?.ingredientsToBuy]
-          .slice(0, 8)
-          .sort(
-            (a, b) =>
-              b.drinksThatCouldBeMade.length - a.drinksThatCouldBeMade.length
-          )
-          .map((obj) => <IngredientToBuy key={obj.ingredient.name} {...obj} />)} */}
     </>
   );
 };

@@ -3,16 +3,14 @@ import {
   CardContent,
   CardMedia,
   Grid,
-  Paper,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import { Link } from "react-router-dom";
 
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
-import { getIngredientImageURL, listInEnglish } from "../../util";
-import SmallIngredientCard from "./SmallIngredientCard";
+import { getIngredientImageURL } from "../../util";
 
 const useStyles = makeStyles({
   root: { height: "100%" },
@@ -42,7 +40,7 @@ const Suggestion = ({
   const classes = useStyles();
 
   return (
-    <Paper variant="outlined" className={classes.root}>
+    <div className={classes.root}>
       <Grid container justifyContent="center" alignContent="stretch">
         <Grid item xs>
           <Card className={classes.cardOutline} variant="outlined">
@@ -73,21 +71,36 @@ const Suggestion = ({
 
         {/* <Divider orientation="vertical" /> */}
 
-        {drinksThatCouldBeMade.map((drink) => (
-          <Grid item xs>
-            <Card className={classes.cardOutline} variant="outlined">
-              <CardMedia
-                image={drink.strDrinkThumb}
-                className={classes.image}
-              />
+        {drinksThatCouldBeMade.map((drink, idx) => (
+          <>
+            {idx > 0 && (
+              <Grid item style={{ width: "3em" }}>
+                <Grid
+                  container
+                  direction="column"
+                  alignContent="center"
+                  justifyContent="center"
+                  style={{ height: "100%" }}
+                >
+                  <AddIcon />
+                </Grid>
+              </Grid>
+            )}
+            <Grid item xs>
+              <Card className={classes.cardOutline} variant="outlined">
+                <CardMedia
+                  image={drink.strDrinkThumb}
+                  className={classes.image}
+                />
 
-              <CardContent>
-                <Typography variant="h6" className={classes.text}>
-                  {drink.name}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+                <CardContent>
+                  <Typography variant="h6" className={classes.text}>
+                    {drink.name}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </>
         ))}
       </Grid>
 
@@ -99,7 +112,7 @@ const Suggestion = ({
           {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}.
         </Typography>
       </CardContent> */}
-    </Paper>
+    </div>
   );
 };
 
