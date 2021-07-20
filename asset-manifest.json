@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/cooktails/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/cooktails/static/js/main.73276a2f.chunk.js",
-    "main.js.map": "/cooktails/static/js/main.73276a2f.chunk.js.map",
+    "main.js": "/cooktails/static/js/main.adfb41aa.chunk.js",
+    "main.js.map": "/cooktails/static/js/main.adfb41aa.chunk.js.map",
     "runtime-main.js": "/cooktails/static/js/runtime-main.74b5189d.js",
     "runtime-main.js.map": "/cooktails/static/js/runtime-main.74b5189d.js.map",
     "static/css/2.3f51239c.chunk.css": "/cooktails/static/css/2.3f51239c.chunk.css",
-    "static/js/2.cbf8717f.chunk.js": "/cooktails/static/js/2.cbf8717f.chunk.js",
-    "static/js/2.cbf8717f.chunk.js.map": "/cooktails/static/js/2.cbf8717f.chunk.js.map",
+    "static/js/2.bf2f0133.chunk.js": "/cooktails/static/js/2.bf2f0133.chunk.js",
+    "static/js/2.bf2f0133.chunk.js.map": "/cooktails/static/js/2.bf2f0133.chunk.js.map",
     "index.html": "/cooktails/index.html",
     "static/css/2.3f51239c.chunk.css.map": "/cooktails/static/css/2.3f51239c.chunk.css.map",
     "static/css/main.6dea0f05.chunk.css.map": "/cooktails/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.cbf8717f.chunk.js.LICENSE.txt": "/cooktails/static/js/2.cbf8717f.chunk.js.LICENSE.txt",
+    "static/js/2.bf2f0133.chunk.js.LICENSE.txt": "/cooktails/static/js/2.bf2f0133.chunk.js.LICENSE.txt",
     "static/media/index.css": "/cooktails/static/media/roboto-latin-900italic.cb5ad999.woff2"
   },
   "entrypoints": [
     "static/js/runtime-main.74b5189d.js",
     "static/css/2.3f51239c.chunk.css",
-    "static/js/2.cbf8717f.chunk.js",
+    "static/js/2.bf2f0133.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.73276a2f.chunk.js"
+    "static/js/main.adfb41aa.chunk.js"
   ]
 }
