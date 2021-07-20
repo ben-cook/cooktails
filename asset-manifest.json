@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cooktails/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/cooktails/static/js/main.5c23aff1.chunk.js",
-    "main.js.map": "/cooktails/static/js/main.5c23aff1.chunk.js.map",
+    "main.js": "/cooktails/static/js/main.edd02d49.chunk.js",
+    "main.js.map": "/cooktails/static/js/main.edd02d49.chunk.js.map",
     "runtime-main.js": "/cooktails/static/js/runtime-main.74b5189d.js",
     "runtime-main.js.map": "/cooktails/static/js/runtime-main.74b5189d.js.map",
     "static/css/2.3f51239c.chunk.css": "/cooktails/static/css/2.3f51239c.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.3f51239c.chunk.css",
     "static/js/2.59bf0e9a.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.5c23aff1.chunk.js"
+    "static/js/main.edd02d49.chunk.js"
   ]
 }
