@@ -1,12 +1,6 @@
-import {
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "material-ui-image";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { Link } from "react-router-dom";
 
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
@@ -27,46 +21,53 @@ const useStyles = makeStyles({
   },
 });
 
-const SuggestionCard = ({
+const Suggestion = ({
   ingredient,
   drinksThatCouldBeMade,
 }: IIngredientToBuy) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <Grid container>
-        <Grid item xs={6}>
-          {/* <CardMedia
+    <div className={classes.root}>
+      <Grid container justifyContent="center">
+        <Grid item xs>
+          <CardMedia
             image={getIngredientImageURL(ingredient.name)}
             className={classes.image}
-          /> */}
-          <Image
-            src={getIngredientImageURL(ingredient.name)}
-            className={classes.ingredientImage}
-            style={{ height: 200, width: 150 }}
           />
+        </Grid>
+
+        <Grid item style={{ width: "3em" }}>
+          <Grid
+            container
+            direction="column"
+            alignContent="center"
+            justifyContent="center"
+            style={{ height: "100%" }}
+          >
+            <ArrowForwardIcon />
+          </Grid>
         </Grid>
 
         {/* <Divider orientation="vertical" /> */}
 
         {drinksThatCouldBeMade.map((drink) => (
-          <Grid item xs={3}>
+          <Grid item xs>
             <CardMedia image={drink.strDrinkThumb} className={classes.image} />
           </Grid>
         ))}
       </Grid>
 
       <CardContent>
-        <Typography variant="h6" className={classes.text}>
+        <Typography variant="body1" className={classes.text}>
           Buying{" "}
           <Link to={`/ingredient/${ingredient.name}`}>{ingredient.name}</Link>{" "}
-          will allow you to make{" "}
-          {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}
+          will allow you to make a{" "}
+          {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}.
         </Typography>
       </CardContent>
-    </Card>
+    </div>
   );
 };
 
-export default SuggestionCard;
+export default Suggestion;

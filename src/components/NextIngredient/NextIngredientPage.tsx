@@ -16,7 +16,7 @@ import { capitalizeEveryWord } from "../../util";
 import { ingredients as allIngredients } from "../ingredients";
 import SmallDrinkCard from "./SmallDrinkCard";
 import SmallIngredientCard from "./SmallIngredientCard";
-import SuggestionCard from "./SuggestionCard";
+import SuggestionCard from "./Suggestion";
 
 const useStyles = makeStyles({
   ingredientsAutocomplete: { marginTop: "2vh" },
@@ -184,7 +184,7 @@ const NextIngredientPage = () => {
             item
             key={ingredientToBuy.ingredient.name}
             xs={12}
-            sm={6}
+            sm={12}
             md={6}
             lg={6}
           >
