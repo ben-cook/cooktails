@@ -3,7 +3,7 @@ import { Box, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { ReactElement } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { RANDOM_DRINK, RandomDrinkData } from "../../apollo/RandomDrink";
 import DrinkPage from "../DrinkPage/DrinkPage";
@@ -62,7 +62,15 @@ const RandomPage = (): ReactElement => {
           />
         </Grid>
       </Grid>
-      {data?.randomDrink.name && <DrinkPage name={data?.randomDrink.name} />}
+
+      {data?.randomDrink.name && (
+        <Link
+          to={`/drink/${data.randomDrink.name}`}
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <DrinkPage name={data?.randomDrink.name} />
+        </Link>
+      )}
 
       <Box textAlign="center"></Box>
     </>

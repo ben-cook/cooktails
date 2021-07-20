@@ -150,18 +150,23 @@ const Suggestion = ({
                 )}
 
                 <Grid item style={{ width: "100%" }}>
-                  <Card className={classes.cardOutline} variant="outlined">
-                    <CardMedia
-                      image={drink.strDrinkThumb}
-                      className={classes.image}
-                    />
+                  <Link
+                    to={`/drink/${drink.name}`}
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                  >
+                    <Card className={classes.cardOutline} variant="outlined">
+                      <CardMedia
+                        image={drink.strDrinkThumb}
+                        className={classes.image}
+                      />
 
-                    <CardContent>
-                      <Typography variant="h6" className={classes.text}>
-                        {drink.name}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                      <CardContent>
+                        <Typography variant="h6" className={classes.text}>
+                          {drink.name}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </Grid>
               </React.Fragment>
             ))}

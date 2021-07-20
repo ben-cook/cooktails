@@ -64,13 +64,11 @@ const SearchPage = () => {
   const onSearchChangeHandler = (e: object & { target: { value: string } }) => {
     setSearchInput(e.target.value);
     setDisplayType("search");
-    console.log("change");
   };
 
   const onFilterChangeHandler = (e: object, value: string[]) => {
     setFilterInput(value);
     setDisplayType("ingredientFilter");
-    console.log("filter change");
   };
 
   const searchDataRef = useRef(searchDrinkData);

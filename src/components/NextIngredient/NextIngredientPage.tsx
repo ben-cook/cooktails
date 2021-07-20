@@ -48,7 +48,6 @@ const NextIngredientPage = () => {
   const [ingredients, setIngredients] = useState<string[]>([]);
 
   const removeListItem = (item: string): void => {
-    // console.log(`removing ${item} from ${ingredients}`);
     let newIngredients: string[] = [];
     ingredients.forEach((ingredient) => {
       if (ingredient !== item) {
@@ -60,7 +59,6 @@ const NextIngredientPage = () => {
   };
 
   const addlistItem = (item: string): void => {
-    // console.log(`adding ${item} to ${ingredients}`);
     let newIngredients: string[] = [...ingredients];
     if (!newIngredients.includes(item)) {
       newIngredients.push(item);
@@ -72,7 +70,6 @@ const NextIngredientPage = () => {
     _: React.ChangeEvent<{}>,
     value: string | null
   ) => {
-    console.log(value);
     value && addlistItem(value);
   };
 
