@@ -89,15 +89,11 @@ const SearchPage = () => {
 
       {/* {!drinks && !errorMessage && <Loading />} */}
       {displayType === "search" && searchDataRef.current && (
-        <SearchResults
-          drinks={searchDataRef.current.fuzzySearchDrinksByName}
-          largerThan600={largerThan600}
-        />
+        <SearchResults drinks={searchDataRef.current.fuzzySearchDrinksByName} />
       )}
       {displayType === "ingredientFilter" && ingredientFilterData && (
         <SearchResults
           drinks={ingredientFilterData.findDrinksWithIngredients}
-          largerThan600={largerThan600}
         />
       )}
 

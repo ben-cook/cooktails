@@ -8,13 +8,7 @@ const useStyles = makeStyles({
   root: { flexGrow: 1 },
 });
 
-const SearchResults = ({
-  drinks,
-  largerThan600,
-}: {
-  drinks: DrinkCardProps[];
-  largerThan600: boolean;
-}) => {
+const SearchResults = ({ drinks }: { drinks: DrinkCardProps[] }) => {
   const classes = useStyles();
 
   return (
@@ -22,22 +16,12 @@ const SearchResults = ({
       container
       direction="row"
       justifyContent="flex-start"
-      alignItems="center"
+      alignItems="stretch"
       spacing={2}
       className={classes.root}
     >
       {drinks.map((drink: DrinkCardProps) => (
-        <Grid
-          item
-          key={drink.name}
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          style={{
-            height: largerThan600 && drink.ingredients.length > 0 ? "60vh" : "",
-          }}
-        >
+        <Grid item key={drink.name} xs={12} sm={6} md={4} lg={3}>
           <Link
             to={`/drink/${drink.name}`}
             style={{ color: "inherit", textDecoration: "inherit" }}

@@ -38,6 +38,7 @@ const useStyles = makeStyles({
   },
   gridContainer: { flexGrow: 1, width: "100%" },
   cardContainer: { marginTop: "1vh" },
+  heading: { marginBottom: "1vh", marginTop: "1vh" },
 });
 
 const NextIngredientPage = () => {
@@ -129,7 +130,7 @@ const NextIngredientPage = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" style={{ marginTop: "1vh" }}>
+      <Typography variant="h4" className={classes.heading}>
         Ingredients:
       </Typography>
       {ingredients.length === 0 && (
@@ -146,7 +147,7 @@ const NextIngredientPage = () => {
         className={classes.cardContainer}
       >
         {ingredients.map((ingredient) => (
-          <Grid item key={ingredient} xs={12} sm={4} md={3} lg={2}>
+          <Grid item key={ingredient} xs={6} sm={4} md={3} lg={2}>
             <SmallIngredientCard
               name={ingredient}
               removeItem={removeListItem}
@@ -155,7 +156,7 @@ const NextIngredientPage = () => {
         ))}
       </Grid>
 
-      <Typography variant="h4" style={{ marginTop: "1vh" }}>
+      <Typography variant="h4" className={classes.heading}>
         Drinks:
       </Typography>
       {data?.drinksThatCanBeMadeWithIngredients.length === 0 && (
@@ -172,14 +173,14 @@ const NextIngredientPage = () => {
         className={classes.cardContainer}
       >
         {data?.drinksThatCanBeMadeWithIngredients.map((drink) => (
-          <Grid item key={drink.name} xs={12} sm={4} md={3} lg={2}>
+          <Grid item key={drink.name} xs={6} sm={4} md={3} lg={2}>
             <SmallDrinkCard {...drink} />
           </Grid>
         ))}
       </Grid>
 
       {data?.ingredientsToBuy && data?.ingredientsToBuy.length > 0 && (
-        <Typography variant="h4" style={{ marginTop: "1vh" }}>
+        <Typography variant="h4" className={classes.heading}>
           Suggestions:
         </Typography>
       )}
