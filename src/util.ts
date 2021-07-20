@@ -16,3 +16,31 @@ export const replaceSpaceWithUnderscore = (s: string): string =>
     .split("")
     .map((char) => (char === " " ? "_" : char))
     .join("");
+
+export const listInEnglish = (items: string[]): string => {
+  if (items.length === 0) {
+    return "";
+  }
+
+  let itemsUpper = items.map(capitalizeEveryWord);
+
+  const recursiveFormat = (innerItems: string[]): string => {
+    let string;
+
+    console.log(innerItems);
+
+    if (innerItems.length === 1) {
+      string = innerItems[0];
+    } else if (innerItems.length === 2) {
+      string = `${recursiveFormat(
+        innerItems.slice(0, 1)
+      )} and ${recursiveFormat(innerItems.slice(1))}`;
+    } else {
+      string = `${innerItems[0]}, ${recursiveFormat(innerItems.slice(1))}`;
+    }
+
+    return string;
+  };
+
+  return recursiveFormat(itemsUpper);
+};
