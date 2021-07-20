@@ -7,6 +7,7 @@ import {
   IngredientSearchData,
   IngredientSearchVariables,
 } from "../../apollo/IngredientSearchByName";
+import { getIngredientImageURL } from "../../util";
 import Loading from "../Loading";
 
 const useStyles = makeStyles({
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
   ingredients: {
     marginTop: "1vh",
   },
+  alcoholicTag: { marginLeft: "1rem" },
 });
 
 const IngredientPage = ({ name }: { name: string }) => {
@@ -37,28 +39,36 @@ const IngredientPage = ({ name }: { name: string }) => {
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        image={`https://www.thecocktaildb.com/images/ingredients/${data?.findIngredientByName.name?.replaceAll(
-          " ",
-          "%20"
-        )}.png`}
-        className={classes.image}
-      />
+      {data?.findIngredientByName && (
+        <CardMedia
+          image={getIngredientImageURL(data?.findIngredientByName.name)}
+          className={classes.image}
+        />
+      )}
 
       <CardContent>
-        <Typography variant="h2">
+        <Typography variant="h2" display="inline">
           {data?.findIngredientByName.name}
-          {/* <Typography variant="body1">{ingredient.idIngredient}</Typography> */}
         </Typography>
+        <Typography
+          variant="subtitle1"
+          display="inline"
+          className={classes.alcoholicTag}
+        >
+          {data?.findIngredientByName.alcoholic &&
+            `alcoholic${
+              data?.findIngredientByName.ABV
+                ? ` - ${data?.findIngredientByName.ABV}% ABV`
+                : ""
+            }`}
+          {data?.findIngredientByName.alcoholic !== undefined &&
+            !data?.findIngredientByName.alcoholic &&
+            "non-alcoholic"}
+        </Typography>
+
         <Typography variant="body1">
           {data?.findIngredientByName.description}
         </Typography>
-
-        {data?.findIngredientByName.ABV && (
-          <Typography variant="h6">
-            {data?.findIngredientByName.ABV}% ABV
-          </Typography>
-        )}
       </CardContent>
     </Card>
   );

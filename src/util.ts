@@ -44,3 +44,10 @@ export const listInEnglish = (items: string[]): string => {
 
   return recursiveFormat(itemsUpper);
 };
+
+export const getIngredientImageURL = (name: string): string => {
+  return `https://www.thecocktaildb.com/images/ingredients/${name.replaceAll(
+    " ",
+    "%20"
+  )}.png`;
+};
