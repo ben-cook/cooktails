@@ -9,6 +9,7 @@ import {
   DrinkSearchVariables,
 } from "../../apollo/DrinkSearchByName";
 import Loading from "../Loading";
+import Nav from "../Nav";
 import IngredientTable from "./IngredientTable";
 
 const useStyles = makeStyles({
@@ -24,6 +25,15 @@ const useStyles = makeStyles({
     marginTop: "2em",
   },
 });
+
+export const DrinkPageWrapper = (props: DrinkPageProps) => {
+  return (
+    <>
+      <Nav />
+      <DrinkPage {...props} />
+    </>
+  );
+};
 
 type DrinkPageProps = { name: string };
 

@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 
-import DrinkPage from "./components/DrinkPage/DrinkPage";
+import { DrinkPageWrapper } from "./components/DrinkPage/DrinkPage";
 import IngredientPage from "./components/IngredientPage/IngredientPage";
 import NextIngredientPage from "./components/NextIngredient/NextIngredientPage";
 import RandomPage from "./components/RandomPage/RandomPage";
@@ -12,7 +12,7 @@ const Router = () => {
       <Route
         exact
         path="/drink/:name"
-        render={(props) => <DrinkPage name={props.match.params.name} />}
+        render={(props) => <DrinkPageWrapper name={props.match.params.name} />}
       />
       <Route
         exact
