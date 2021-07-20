@@ -3,11 +3,14 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  Paper,
   Typography,
+  useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import React from "react";
 
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
 import { getIngredientImageURL } from "../../util";
@@ -28,8 +31,8 @@ const useStyles = makeStyles({
   cardOutline: {
     marginLeft: "1vw",
     marginTop: "1vw",
+    marginBottom: "1vw",
     marginRight: "1vw",
-    height: "95%",
   },
 });
 
@@ -39,11 +42,14 @@ const Suggestion = ({
 }: IIngredientToBuy) => {
   const classes = useStyles();
 
+  const largerThan540 = useMediaQuery("(min-width:540px)");
+
   return (
-    <div className={classes.root}>
-      <Grid container justifyContent="center" alignContent="stretch">
-        <Grid item xs>
-          <Card className={classes.cardOutline} variant="outlined">
+    <Paper className={classes.root} variant="outlined">
+      <Grid container justifyContent="center" alignItems="stretch">
+        <Grid item xs className={classes.cardOutline}>
+          {/* Image Card*/}
+          <Card variant="outlined" style={{ height: "100%" }}>
             <CardMedia
               image={getIngredientImageURL(ingredient.name)}
               className={classes.image}
@@ -57,62 +63,101 @@ const Suggestion = ({
           </Card>
         </Grid>
 
-        <Grid item style={{ width: "3em" }}>
+        {/* Arrow Icon*/}
+        <Grid item>
           <Grid
             container
             direction="column"
             alignContent="center"
             justifyContent="center"
-            style={{ height: "100%" }}
+            style={{ height: "100%", minWidth: "1em" }}
           >
             <ArrowForwardIcon />
           </Grid>
         </Grid>
 
-        {/* <Divider orientation="vertical" /> */}
-
-        {drinksThatCouldBeMade.map((drink, idx) => (
-          <>
-            {idx > 0 && (
-              <Grid item style={{ width: "3em" }}>
-                <Grid
-                  container
-                  direction="column"
-                  alignContent="center"
-                  justifyContent="center"
-                  style={{ height: "100%" }}
-                >
-                  <AddIcon />
+        {/* Desktop Sized Drinks*/}
+        {largerThan540 &&
+          drinksThatCouldBeMade.map((drink, idx) => (
+            <React.Fragment key={drink.name}>
+              {idx > 0 && (
+                <Grid item>
+                  <Grid
+                    container
+                    direction="column"
+                    alignContent="center"
+                    justifyContent="center"
+                    style={{ height: "100%", minWidth: "1em" }}
+                  >
+                    <AddIcon />
+                  </Grid>
                 </Grid>
+              )}
+
+              <Grid item xs className={classes.cardOutline}>
+                <Card variant="outlined" style={{ height: "100%" }}>
+                  <CardMedia
+                    image={drink.strDrinkThumb}
+                    className={classes.image}
+                  />
+
+                  <CardContent>
+                    <Typography variant="h6" className={classes.text}>
+                      {drink.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
               </Grid>
-            )}
-            <Grid item xs>
-              <Card className={classes.cardOutline} variant="outlined">
-                <CardMedia
-                  image={drink.strDrinkThumb}
-                  className={classes.image}
-                />
+            </React.Fragment>
+          ))}
 
-                <CardContent>
-                  <Typography variant="h6" className={classes.text}>
-                    {drink.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </>
-        ))}
+        {/* Mobile Sized Drinks*/}
+        {!largerThan540 && (
+          <Grid
+            container
+            item
+            xs
+            direction="column"
+            justifyContent="center"
+            alignContent="center"
+            alignItems="center"
+          >
+            {drinksThatCouldBeMade.map((drink, idx) => (
+              <React.Fragment key={drink.name}>
+                {idx > 0 && (
+                  <Grid item style={{ width: "100%" }}>
+                    <Grid
+                      container
+                      direction="column"
+                      alignContent="center"
+                      justifyContent="center"
+                      style={{ height: "100%", minWidth: "1em" }}
+                    >
+                      <AddIcon />
+                    </Grid>
+                  </Grid>
+                )}
+
+                <Grid item style={{ width: "100%" }}>
+                  <Card className={classes.cardOutline} variant="outlined">
+                    <CardMedia
+                      image={drink.strDrinkThumb}
+                      className={classes.image}
+                    />
+
+                    <CardContent>
+                      <Typography variant="h6" className={classes.text}>
+                        {drink.name}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </React.Fragment>
+            ))}
+          </Grid>
+        )}
       </Grid>
-
-      {/* <CardContent>
-        <Typography variant="body1" className={classes.text}>
-          Buying{" "}
-          <Link to={`/ingredient/${ingredient.name}`}>{ingredient.name}</Link>{" "}
-          will allow you to make a{" "}
-          {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}.
-        </Typography>
-      </CardContent> */}
-    </div>
+    </Paper>
   );
 };
 
