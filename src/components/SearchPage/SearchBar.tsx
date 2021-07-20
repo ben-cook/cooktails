@@ -35,11 +35,13 @@ const useStyles = makeStyles({
 interface SearchBarProps {
   onChangeHandler: (e: object & { target: { value: string } }) => void;
   onFilterChangeHandler: (e: object, value: string[]) => void;
+  largerThan600: boolean;
 }
 
 const SearchBar = ({
   onChangeHandler,
   onFilterChangeHandler,
+  largerThan600,
 }: SearchBarProps) => {
   const classes = useStyles();
   const history = useHistory();
@@ -118,7 +120,8 @@ const SearchBar = ({
               <RandomDrinkButton
                 randomDrinkHandler={randomDrinkHandler}
                 className={classes.randomDrinkButton}
-                buttonText="Random Cocktail"
+                buttonText="Show me a Random Cocktail"
+                fullWidth={!largerThan600}
               />
             </Box>
           </Container>

@@ -1,19 +1,20 @@
-import { useState, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Container } from "@material-ui/core";
-import SearchBar from "./SearchBar";
-import { capitalizeEveryWord } from "../../util";
 import { useQuery } from "@apollo/client";
+import { Container, Typography, useMediaQuery } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { useRef, useState } from "react";
+
 import {
-  FuzzyDrinkSearchData,
-  FuzzyDrinkSearchVariables,
-  FUZZY_DRINK_SEARCH,
-} from "../../apollo/FuzzyDrinkSearch";
-import {
+  FIND_DRINKS_WITH_INGREDIENTS,
   FindDrinksWithIngredientsData,
   FindDrinksWithIngredientsVariables,
-  FIND_DRINKS_WITH_INGREDIENTS,
 } from "../../apollo/FindDrinksWithIngredients";
+import {
+  FUZZY_DRINK_SEARCH,
+  FuzzyDrinkSearchData,
+  FuzzyDrinkSearchVariables,
+} from "../../apollo/FuzzyDrinkSearch";
+import { capitalizeEveryWord } from "../../util";
+import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
 const useStyles = makeStyles({
@@ -51,6 +52,8 @@ const SearchPage = () => {
 
   type DisplayType = "search" | "ingredientFilter";
   const [displayType, setDisplayType] = useState<DisplayType>("search");
+
+  const largerThan600 = useMediaQuery("(min-width:600px)");
 
   const { data: searchDrinkData } = useQuery<
     FuzzyDrinkSearchData,
@@ -97,15 +100,20 @@ const SearchPage = () => {
       <SearchBar
         onChangeHandler={onSearchChangeHandler}
         onFilterChangeHandler={onFilterChangeHandler}
+        largerThan600={largerThan600}
       />
 
       {/* {!drinks && !errorMessage && <Loading />} */}
       {displayType === "search" && searchDataRef.current && (
-        <SearchResults drinks={searchDataRef.current.fuzzySearchDrinksByName} />
+        <SearchResults
+          drinks={searchDataRef.current.fuzzySearchDrinksByName}
+          largerThan600={largerThan600}
+        />
       )}
       {displayType === "ingredientFilter" && ingredientFilterData && (
         <SearchResults
           drinks={ingredientFilterData.findDrinksWithIngredients}
+          largerThan600={largerThan600}
         />
       )}
 

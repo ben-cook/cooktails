@@ -1,15 +1,20 @@
 import { Grid } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import DrinkCard, { DrinkCardProps } from "./DrinkCard";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
+import DrinkCard, { DrinkCardProps } from "./DrinkCard";
 
 const useStyles = makeStyles({
   root: { flexGrow: 1 },
 });
 
-const SearchResults = ({ drinks }: { drinks: DrinkCardProps[] }) => {
-  const largerThan600 = useMediaQuery("(min-width:600px)");
+const SearchResults = ({
+  drinks,
+  largerThan600,
+}: {
+  drinks: DrinkCardProps[];
+  largerThan600: boolean;
+}) => {
   const classes = useStyles();
 
   return (
