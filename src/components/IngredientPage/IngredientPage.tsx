@@ -70,7 +70,7 @@ const IngredientPage = ({ name }: { name: string }) => {
         </Typography>
 
         <Typography variant="body1">
-          {data?.findIngredientByName &&
+          {data?.findIngredientByName.description &&
             fitParagraphIntoCharacterLimit(
               data?.findIngredientByName.description,
               800

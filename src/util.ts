@@ -54,6 +54,10 @@ export const fitParagraphIntoCharacterLimit = (
   paragraph: string,
   characterLimit: number
 ): string => {
+  if (paragraph.length <= characterLimit) {
+    return paragraph;
+  }
+
   let newParagraph = paragraph;
   const sentences = paragraph.split(".");
   let i = 0;
