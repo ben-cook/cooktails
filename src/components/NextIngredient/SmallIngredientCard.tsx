@@ -3,6 +3,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CardProps,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,15 +27,21 @@ const SmallIngredientCard = ({
   removeItem,
 }: {
   name: string;
-  removeItem: (name: string) => void;
+  removeItem?: (name: string) => void;
 }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActions>
-        <ClearIcon className={classes.icon} onClick={() => removeItem(name)} />
-      </CardActions>
+      {removeItem && (
+        <CardActions>
+          <ClearIcon
+            className={classes.icon}
+            onClick={() => removeItem(name)}
+          />
+        </CardActions>
+      )}
+
       <CardMedia
         image={getIngredientImageURL(name)}
         className={classes.image}

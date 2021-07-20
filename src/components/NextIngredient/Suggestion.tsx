@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
 import { getIngredientImageURL, listInEnglish } from "../../util";
+import SmallIngredientCard from "./SmallIngredientCard";
 
 const useStyles = makeStyles({
   root: { height: "100%" },
@@ -30,6 +31,7 @@ const useStyles = makeStyles({
     marginLeft: "1vw",
     marginTop: "1vw",
     marginRight: "1vw",
+    height: "95%",
   },
 });
 
@@ -41,13 +43,19 @@ const Suggestion = ({
 
   return (
     <Paper variant="outlined" className={classes.root}>
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" alignContent="stretch">
         <Grid item xs>
-          <Card variant="outlined" className={classes.cardOutline}>
+          <Card className={classes.cardOutline} variant="outlined">
             <CardMedia
               image={getIngredientImageURL(ingredient.name)}
               className={classes.image}
             />
+
+            <CardContent>
+              <Typography variant="h6" className={classes.text}>
+                {ingredient.name}
+              </Typography>
+            </CardContent>
           </Card>
         </Grid>
 
@@ -67,24 +75,30 @@ const Suggestion = ({
 
         {drinksThatCouldBeMade.map((drink) => (
           <Grid item xs>
-            <Card variant="outlined" className={classes.cardOutline}>
+            <Card className={classes.cardOutline} variant="outlined">
               <CardMedia
                 image={drink.strDrinkThumb}
                 className={classes.image}
               />
+
+              <CardContent>
+                <Typography variant="h6" className={classes.text}>
+                  {drink.name}
+                </Typography>
+              </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
 
-      <CardContent>
+      {/* <CardContent>
         <Typography variant="body1" className={classes.text}>
           Buying{" "}
           <Link to={`/ingredient/${ingredient.name}`}>{ingredient.name}</Link>{" "}
           will allow you to make a{" "}
           {listInEnglish(drinksThatCouldBeMade.map((drink) => drink.name))}.
         </Typography>
-      </CardContent>
+      </CardContent> */}
     </Paper>
   );
 };
