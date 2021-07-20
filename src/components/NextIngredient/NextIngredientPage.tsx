@@ -1,29 +1,29 @@
+import { useQuery } from "@apollo/client";
 import {
   Box,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   TextField,
-  Button,
   Typography,
-  Grid,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { Fragment, useState } from "react";
-import { capitalizeEveryWord, listInEnglish } from "../../util";
 import { makeStyles } from "@material-ui/core/styles";
-import { ingredients as allIngredients } from "../ingredients";
+import AddIcon from "@material-ui/icons/Add";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import RemoveIcon from "@material-ui/icons/Remove";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Fragment, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+
 import {
+  NEXT_INGREDIENT_PAGE_QUERY,
   NextIngredientData,
   NextIngredientVariables,
-  NEXT_INGREDIENT_PAGE_QUERY,
 } from "../../apollo/NextIngredientPageQuery";
+import { capitalizeEveryWord, listInEnglish } from "../../util";
+import { ingredients as allIngredients } from "../ingredients";
 import IngredientToBuy from "./IngredientToBuy";
 
 const useStyles = makeStyles({

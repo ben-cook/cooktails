@@ -1,12 +1,13 @@
+import { useQuery } from "@apollo/client";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Loading from "../Loading";
+
 import {
+  INGREDIENT_SEARCH_BY_NAME,
   IngredientSearchData,
   IngredientSearchVariables,
-  INGREDIENT_SEARCH_BY_NAME,
 } from "../../apollo/IngredientSearchByName";
-import { useQuery } from "@apollo/client";
+import Loading from "../Loading";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },

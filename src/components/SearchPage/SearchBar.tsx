@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { ingredients } from "../ingredients";
 import {
-  Grid,
-  TextField,
-  Paper,
-  Container,
-  Typography,
   Box,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 import { capitalizeEveryWord } from "../../util";
+import { ingredients } from "../ingredients";
 import RandomDrinkButton from "../RandomDrinkButton";
 
 const useStyles = makeStyles({

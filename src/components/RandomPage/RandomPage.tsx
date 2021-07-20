@@ -1,11 +1,12 @@
-import DrinkPage from "../DrinkPage/DrinkPage";
-import { ReactElement } from "react";
-import Loading from "../Loading";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
-import RandomDrinkButton from "../RandomDrinkButton";
 import { useQuery } from "@apollo/client";
-import { RandomDrinkData, RANDOM_DRINK } from "../../apollo/RandomDrink";
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { ReactElement } from "react";
+
+import { RANDOM_DRINK, RandomDrinkData } from "../../apollo/RandomDrink";
+import DrinkPage from "../DrinkPage/DrinkPage";
+import Loading from "../Loading";
+import RandomDrinkButton from "../RandomDrinkButton";
 
 const useStyles = makeStyles({
   randomDrinkButton: {

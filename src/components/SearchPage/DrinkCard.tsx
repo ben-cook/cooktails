@@ -1,6 +1,6 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-import { ReactElement } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { ReactElement } from "react";
 
 const useStyles = makeStyles({
   root: { height: "100%" },

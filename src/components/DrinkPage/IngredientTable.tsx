@@ -1,14 +1,15 @@
 import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
   TableContainer,
   TableHead,
-  TableCell,
-  TableBody,
   TableRow,
-  Table,
-  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+
 import { DrinkData } from "../../interfaces";
 
 const useStyles = makeStyles({

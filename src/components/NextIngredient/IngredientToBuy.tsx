@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+
 import { IIngredientToBuy } from "../../apollo/NextIngredientPageQuery";
 
 const IngredientToBuy = ({

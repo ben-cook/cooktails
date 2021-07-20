@@ -1,5 +1,5 @@
-import ReactLoading from "react-loading";
 import { makeStyles } from "@material-ui/core/styles";
+import ReactLoading from "react-loading";
 
 const useStyles = makeStyles({
   root: { paddingTop: "15vh", margin: "auto", maxHeight: 100, maxWidth: 100 },

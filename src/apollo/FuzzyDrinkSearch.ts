@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+
 import { DrinkCardProps } from "../components/SearchPage/DrinkCard";
 
 export const FUZZY_DRINK_SEARCH = gql`

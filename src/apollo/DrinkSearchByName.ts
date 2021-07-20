@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+
 import { DrinkData } from "../interfaces";
 
 export const DRINK_SEARCH_BY_NAME = gql`

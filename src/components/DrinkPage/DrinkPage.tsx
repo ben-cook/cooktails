@@ -1,14 +1,15 @@
+import { useQuery } from "@apollo/client";
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ReactPlayer from "react-player/youtube";
-import IngredientTable from "./IngredientTable";
-import Loading from "../Loading";
-import { useQuery } from "@apollo/client";
+
 import {
+  DRINK_SEARCH_BY_NAME,
   DrinkSearchData,
   DrinkSearchVariables,
 } from "../../apollo/DrinkSearchByName";
-import { DRINK_SEARCH_BY_NAME } from "../../apollo/DrinkSearchByName";
+import Loading from "../Loading";
+import IngredientTable from "./IngredientTable";
 
 const useStyles = makeStyles({
   root: { height: "100%", marginTop: "5vh" },
